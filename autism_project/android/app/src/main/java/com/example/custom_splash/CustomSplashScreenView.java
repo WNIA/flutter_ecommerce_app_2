@@ -26,7 +26,7 @@ public class CustomSplashScreenView extends FrameLayout {
   private float rotateAngle = 360;
   private ViewPropertyAnimator rotateAnimator;
   //fade animation variables
-  private static final int TRANSITION_TIME_IN_MILLIS = 2000;
+  private static final int TRANSITION_TIME_IN_MILLIS = 1000;
   private float transitionPercentWhenAnimationStarted = 0.0f;
   private float totalTransitionPercent = 0.0f;
   private Runnable onTransitionComplete;
