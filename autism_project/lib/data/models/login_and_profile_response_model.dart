@@ -1,39 +1,57 @@
 import 'dart:convert';
 
-ProfileResponseModel profileResponseModelFromJson(String str) => ProfileResponseModel.fromJson(json.decode(str));
+LoginAndProfileResponseModel loginAndProfileResponseFromJson(String str) => LoginAndProfileResponseModel.fromJson(json.decode(str));
 
-String profileResponseModelToJson(ProfileResponseModel data) => json.encode(data.toJson());
+String loginAndProfileResponseToJson(LoginAndProfileResponseModel data) => json.encode(data.toJson());
 
-class ProfileResponseModel {
-  ProfileResponseModel({
+class LoginAndProfileResponseModel {
+  final int status;
+  final bool success;
+  final String jwt;
+  final LoginAndProfileData data;
+  final String message;
+
+  LoginAndProfileResponseModel({
     this.status,
     this.success,
+    this.jwt,
     this.data,
     this.message,
   });
 
-  int status;
-  bool success;
-  ProfileData data;
-  String message;
-
-  factory ProfileResponseModel.fromJson(Map<String, dynamic> json) => ProfileResponseModel(
+  factory LoginAndProfileResponseModel.fromJson(Map<String, dynamic> json) => LoginAndProfileResponseModel(
     status: json["status"],
     success: json["success"],
-    data: ProfileData.fromJson(json["data"]),
+    jwt: json["jwt"],
+    data: LoginAndProfileData.fromJson(json["data"]),
     message: json["message"],
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "success": success,
+    "jwt": jwt,
     "data": data.toJson(),
     "message": message,
   };
 }
 
-class ProfileData {
-  ProfileData({
+class LoginAndProfileData {
+  int id;
+  String name;
+  String email;
+  String password;
+  String mobileNumber;
+  int gender;
+  String nid;
+  int status;
+  DateTime created;
+  String picture;
+  int deliveryStatus;
+  dynamic latitude;
+  dynamic longitude;
+
+  LoginAndProfileData({
     this.id,
     this.name,
     this.email,
@@ -49,21 +67,7 @@ class ProfileData {
     this.longitude,
   });
 
-  int id;
-  String name;
-  String email;
-  String password;
-  String mobileNumber;
-  int gender;
-  String nid;
-  int status;
-  DateTime created;
-  String picture;
-  int deliveryStatus;
-  dynamic latitude;
-  dynamic longitude;
-
-  factory ProfileData.fromJson(Map<String, dynamic> json) => ProfileData(
+  factory LoginAndProfileData.fromJson(Map<String, dynamic> json) => LoginAndProfileData(
     id: json["Id"],
     name: json["Name"],
     email: json["Email"],

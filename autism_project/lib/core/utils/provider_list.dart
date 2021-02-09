@@ -1,7 +1,7 @@
-import 'package:autism_project/data/datasources/finished_deliveries_api_service.dart';
-import 'package:autism_project/data/datasources/login_api_service.dart';
-import 'package:autism_project/data/datasources/pending_order_api_service.dart';
-import 'package:autism_project/data/datasources/processed_deliveries_api_service.dart';
+import 'package:autism_project/data/datasources/finished_deliveries_remote.dart';
+import 'package:autism_project/data/datasources/login_and_profile_remote.dart';
+import 'package:autism_project/data/datasources/pending_order_remote.dart';
+import 'package:autism_project/data/datasources/processed_deliveries_remote.dart';
 import 'package:autism_project/data/datasources/processed_deliveries_details_api_service.dart';
 import 'package:autism_project/data/datasources/processed_deliveries_list_api_service.dart';
 import 'package:autism_project/data/datasources/profile_api_service.dart';

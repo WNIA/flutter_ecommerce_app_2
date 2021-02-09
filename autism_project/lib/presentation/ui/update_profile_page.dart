@@ -1,8 +1,8 @@
-import 'package:autism_project/data/models/profile_response_model.dart';
+import 'package:autism_project/data/models/login_and_profile_response_model.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
-  final ProfileResponseModel userData;
+  final LoginAndProfileResponseModel userData;
   ProfilePage(this.userData);
 
 
