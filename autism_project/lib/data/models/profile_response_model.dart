@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-ProfileResponseModel profileResponseModelFromJson(String str) =>
-    ProfileResponseModel.fromJson(json.decode(str));
+ProfileResponseModel profileResponseModelFromJson(String str) => ProfileResponseModel.fromJson(json.decode(str));
 
-String profileResponseModelToJson(ProfileResponseModel data) =>
-    json.encode(data.toJson());
+String profileResponseModelToJson(ProfileResponseModel data) => json.encode(data.toJson());
 
 class ProfileResponseModel {
   ProfileResponseModel({
@@ -19,20 +17,19 @@ class ProfileResponseModel {
   ProfileData data;
   String message;
 
-  factory ProfileResponseModel.fromJson(Map<String, dynamic> json) =>
-      ProfileResponseModel(
-        status: json["status"],
-        success: json["success"],
-        data: ProfileData.fromJson(json["data"]),
-        message: json["message"],
-      );
+  factory ProfileResponseModel.fromJson(Map<String, dynamic> json) => ProfileResponseModel(
+    status: json["status"],
+    success: json["success"],
+    data: ProfileData.fromJson(json["data"]),
+    message: json["message"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "success": success,
-        "data": data.toJson(),
-        "message": message,
-      };
+    "status": status,
+    "success": success,
+    "data": data.toJson(),
+    "message": message,
+  };
 }
 
 class ProfileData {
@@ -67,34 +64,34 @@ class ProfileData {
   dynamic longitude;
 
   factory ProfileData.fromJson(Map<String, dynamic> json) => ProfileData(
-        id: json["Id"],
-        name: json["Name"],
-        email: json["Email"],
-        password: json["Password"],
-        mobileNumber: json["MobileNumber"],
-        gender: json["Gender"],
-        nid: json["NID"],
-        status: json["Status"],
-        created: DateTime.parse(json["Created"]),
-        picture: json["Picture"],
-        deliveryStatus: json["DeliveryStatus"],
-        latitude: json["Latitude"],
-        longitude: json["longitude"],
-      );
+    id: json["Id"],
+    name: json["Name"],
+    email: json["Email"],
+    password: json["Password"],
+    mobileNumber: json["MobileNumber"],
+    gender: json["Gender"],
+    nid: json["NID"],
+    status: json["Status"],
+    created: DateTime.parse(json["Created"]),
+    picture: json["Picture"],
+    deliveryStatus: json["DeliveryStatus"],
+    latitude: json["Latitude"],
+    longitude: json["longitude"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "Id": id,
-        "Name": name,
-        "Email": email,
-        "Password": password,
-        "MobileNumber": mobileNumber,
-        "Gender": gender,
-        "NID": nid,
-        "Status": status,
-        "Created": created.toIso8601String(),
-        "Picture": picture,
-        "DeliveryStatus": deliveryStatus,
-        "Latitude": latitude,
-        "longitude": longitude,
-      };
+    "Id": id,
+    "Name": name,
+    "Email": email,
+    "Password": password,
+    "MobileNumber": mobileNumber,
+    "Gender": gender,
+    "NID": nid,
+    "Status": status,
+    "Created": created.toIso8601String(),
+    "Picture": picture,
+    "DeliveryStatus": deliveryStatus,
+    "Latitude": latitude,
+    "longitude": longitude,
+  };
 }

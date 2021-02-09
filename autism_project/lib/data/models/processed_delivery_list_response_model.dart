@@ -4,13 +4,9 @@
 
 import 'dart:convert';
 
-ProcessedDeliveriesListResponseModel
-    processedDeliveriesListResponseModelFromJson(String str) =>
-        ProcessedDeliveriesListResponseModel.fromJson(json.decode(str));
+ProcessedDeliveriesListResponseModel processedDeliveriesListResponseModelFromJson(String str) => ProcessedDeliveriesListResponseModel.fromJson(json.decode(str));
 
-String processedDeliveriesListResponseModelToJson(
-        ProcessedDeliveriesListResponseModel data) =>
-    json.encode(data.toJson());
+String processedDeliveriesListResponseModelToJson(ProcessedDeliveriesListResponseModel data) => json.encode(data.toJson());
 
 class ProcessedDeliveriesListResponseModel {
   ProcessedDeliveriesListResponseModel({
@@ -25,22 +21,19 @@ class ProcessedDeliveriesListResponseModel {
   List<ProcessedDeliveryListData> data;
   String message;
 
-  factory ProcessedDeliveriesListResponseModel.fromJson(
-          Map<String, dynamic> json) =>
-      ProcessedDeliveriesListResponseModel(
-        status: json["status"],
-        success: json["success"],
-        data: List<ProcessedDeliveryListData>.from(
-            json["data"].map((x) => ProcessedDeliveryListData.fromJson(x))),
-        message: json["message"],
-      );
+  factory ProcessedDeliveriesListResponseModel.fromJson(Map<String, dynamic> json) => ProcessedDeliveriesListResponseModel(
+    status: json["status"],
+    success: json["success"],
+    data: List<ProcessedDeliveryListData>.from(json["data"].map((x) => ProcessedDeliveryListData.fromJson(x))),
+    message: json["message"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "success": success,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "message": message,
-      };
+    "status": status,
+    "success": success,
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "message": message,
+  };
 }
 
 class ProcessedDeliveryListData {
@@ -74,36 +67,35 @@ class ProcessedDeliveryListData {
   dynamic returnProduct;
   dynamic returnReason;
 
-  factory ProcessedDeliveryListData.fromJson(Map<String, dynamic> json) =>
-      ProcessedDeliveryListData(
-        id: json["Id"],
-        name: json["Name"],
-        quantity: json["Quantity"],
-        price: json["Price"],
-        productId: json["ProductId"],
-        orderId: json["OrderId"],
-        orderStatus: json["OrderStatus"],
-        picture: json["Picture"],
-        shopId: json["ShopId"],
-        created: DateTime.parse(json["Created"]),
-        customerId: json["CustomerId"],
-        returnProduct: json["ReturnProduct"],
-        returnReason: json["ReturnReason"],
-      );
+  factory ProcessedDeliveryListData.fromJson(Map<String, dynamic> json) => ProcessedDeliveryListData(
+    id: json["Id"],
+    name: json["Name"],
+    quantity: json["Quantity"],
+    price: json["Price"],
+    productId: json["ProductId"],
+    orderId: json["OrderId"],
+    orderStatus: json["OrderStatus"],
+    picture: json["Picture"],
+    shopId: json["ShopId"],
+    created: DateTime.parse(json["Created"]),
+    customerId: json["CustomerId"],
+    returnProduct: json["ReturnProduct"],
+    returnReason: json["ReturnReason"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "Id": id,
-        "Name": name,
-        "Quantity": quantity,
-        "Price": price,
-        "ProductId": productId,
-        "OrderId": orderId,
-        "OrderStatus": orderStatus,
-        "Picture": picture,
-        "ShopId": shopId,
-        "Created": created.toIso8601String(),
-        "CustomerId": customerId,
-        "ReturnProduct": returnProduct,
-        "ReturnReason": returnReason,
-      };
+    "Id": id,
+    "Name": name,
+    "Quantity": quantity,
+    "Price": price,
+    "ProductId": productId,
+    "OrderId": orderId,
+    "OrderStatus": orderStatus,
+    "Picture": picture,
+    "ShopId": shopId,
+    "Created": created.toIso8601String(),
+    "CustomerId": customerId,
+    "ReturnProduct": returnProduct,
+    "ReturnReason": returnReason,
+  };
 }

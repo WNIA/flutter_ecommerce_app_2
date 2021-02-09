@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:autism_project/core/helper/constants.dart';
 import 'package:autism_project/data/models/profile_response_model.dart';
+import 'package:flutter/material.dart';
 
-class ProfileAPIService {
+class ProfileAPIService extends ChangeNotifier {
   ProfileResponseModel _responseModel = ProfileResponseModel();
 
-  fetchProfileData(String token) async {
+  fetchProfileData() async {
     try {
       String stringToDecode = "";
       final client = HttpClient();
@@ -16,7 +18,7 @@ class ProfileAPIService {
       final request = await client.getUrl(Uri.parse(
           "http://199.192.28.11/stationary/v1/get-delivery-user-profile.php"));
       request.headers
-          .set("Authorization", token, preserveHeaderCase: true);
+          .set("Authorization", Constants.myToken, preserveHeaderCase: true);
       final response = await request.close();
       print(response.statusCode);
       response.transform(utf8.decoder).listen((event) {

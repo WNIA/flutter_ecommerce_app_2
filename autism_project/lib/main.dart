@@ -1,34 +1,64 @@
-import 'package:autism_project/presentation/ui/placeholder.dart';
+
+
+/*Author: Wasema Nooren Islam (@WNIA)*/
+
+import 'package:autism_project/presentation/ui/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'core/helper/authenticate.dart';
+import 'core/helper/shared_preference.dart';
+import 'core/utils/provider_list.dart';
+import 'core/utils/route_list.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool userLoggedIn = false;
+
+  @override
+  void initState() {
+    getLoggedInState();
+    super.initState();
+  }
+
+  /*
+   * check if user is logged in - @WNIA
+   */
+  getLoggedInState() async {
+    await SharedPrefs.getUserLoggedInSharedPref().then((value) {
+      setState(() {
+        userLoggedIn = value;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: PlaceHolder(title: 'Flutter Demo Home Page'),
+    return MultiProvider(
+        providers: providerList(),
+        child: MaterialApp(
+            title: 'Autism Project Demo',
+            theme: ThemeData(
+              scaffoldBackgroundColor: Colors.white,
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              accentColor: Colors.black,
+            ),
+            debugShowCheckedModeBanner: false,
+            home: userLoggedIn != null ? (userLoggedIn
+                ? HomePage()
+                : Authenticate()) : Authenticate(),
+            routes: routeList()
+        ),
     );
   }
 }
-

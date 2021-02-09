@@ -1,12 +1,8 @@
 import 'dart:convert';
 
-FinishedDeliveriesResponseModel finishedDeliveriesResponseModelFromJson(
-        String str) =>
-    FinishedDeliveriesResponseModel.fromJson(json.decode(str));
+FinishedDeliveriesResponseModel finishedDeliveriesResponseModelFromJson(String str) => FinishedDeliveriesResponseModel.fromJson(json.decode(str));
 
-String finishedDeliveriesResponseModelToJson(
-        FinishedDeliveriesResponseModel data) =>
-    json.encode(data.toJson());
+String finishedDeliveriesResponseModelToJson(FinishedDeliveriesResponseModel data) => json.encode(data.toJson());
 
 class FinishedDeliveriesResponseModel {
   FinishedDeliveriesResponseModel({
@@ -21,20 +17,19 @@ class FinishedDeliveriesResponseModel {
   List<Data> data;
   String message;
 
-  factory FinishedDeliveriesResponseModel.fromJson(Map<String, dynamic> json) =>
-      FinishedDeliveriesResponseModel(
-        status: json["status"],
-        success: json["success"],
-        data: List<Data>.from(json["data"].map((x) => Data.fromJson(x))),
-        message: json["message"],
-      );
+  factory FinishedDeliveriesResponseModel.fromJson(Map<String, dynamic> json) => FinishedDeliveriesResponseModel(
+    status: json["status"],
+    success: json["success"],
+    data: List<Data>.from(json["data"].map((x) => Data.fromJson(x))),
+    message: json["message"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "success": success,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "message": message,
-      };
+    "status": status,
+    "success": success,
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "message": message,
+  };
 }
 
 class Data {
@@ -73,38 +68,38 @@ class Data {
   int customerId;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        name: json["Name"],
-        email: json["Email"],
-        mobileNumber: json["MobileNumber"],
-        picture: json["Picture"],
-        orderLatitude: json["OrderLatitude"].toDouble(),
-        orderLongitude: json["OrderLongitude"].toDouble(),
-        orderId: json["OrderId"],
-        shopId: json["ShopId"],
-        id: json["Id"],
-        invoiceNumber: json["InvoiceNumber"],
-        deliveryCharge: json["DeliveryCharge"],
-        orderDetails: json["OrderDetails"],
-        status: json["Status"],
-        created: DateTime.parse(json["Created"]),
-        customerId: json["CustomerId"],
-      );
+    name: json["Name"],
+    email: json["Email"],
+    mobileNumber: json["MobileNumber"],
+    picture: json["Picture"],
+    orderLatitude: json["OrderLatitude"].toDouble(),
+    orderLongitude: json["OrderLongitude"].toDouble(),
+    orderId: json["OrderId"],
+    shopId: json["ShopId"],
+    id: json["Id"],
+    invoiceNumber: json["InvoiceNumber"],
+    deliveryCharge: json["DeliveryCharge"],
+    orderDetails: json["OrderDetails"],
+    status: json["Status"],
+    created: DateTime.parse(json["Created"]),
+    customerId: json["CustomerId"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "Name": name,
-        "Email": email,
-        "MobileNumber": mobileNumber,
-        "Picture": picture,
-        "OrderLatitude": orderLatitude,
-        "OrderLongitude": orderLongitude,
-        "OrderId": orderId,
-        "ShopId": shopId,
-        "Id": id,
-        "InvoiceNumber": invoiceNumber,
-        "DeliveryCharge": deliveryCharge,
-        "OrderDetails": orderDetails,
-        "Status": status,
-        "Created": created.toIso8601String(),
-        "CustomerId": customerId,
-      };
+    "Name": name,
+    "Email": email,
+    "MobileNumber": mobileNumber,
+    "Picture": picture,
+    "OrderLatitude": orderLatitude,
+    "OrderLongitude": orderLongitude,
+    "OrderId": orderId,
+    "ShopId": shopId,
+    "Id": id,
+    "InvoiceNumber": invoiceNumber,
+    "DeliveryCharge": deliveryCharge,
+    "OrderDetails": orderDetails,
+    "Status": status,
+    "Created": created.toIso8601String(),
+    "CustomerId": customerId,
+  };
 }

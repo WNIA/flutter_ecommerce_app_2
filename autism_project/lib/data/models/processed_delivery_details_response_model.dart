@@ -4,13 +4,9 @@
 
 import 'dart:convert';
 
-ProcessedDeliveriesDetailsResponseModel
-    processedDeliveriesDetailsResponseModelFromJson(String str) =>
-        ProcessedDeliveriesDetailsResponseModel.fromJson(json.decode(str));
+ProcessedDeliveriesDetailsResponseModel processedDeliveriesDetailsResponseModelFromJson(String str) => ProcessedDeliveriesDetailsResponseModel.fromJson(json.decode(str));
 
-String processedDeliveriesDetailsResponseModelToJson(
-        ProcessedDeliveriesDetailsResponseModel data) =>
-    json.encode(data.toJson());
+String processedDeliveriesDetailsResponseModelToJson(ProcessedDeliveriesDetailsResponseModel data) => json.encode(data.toJson());
 
 class ProcessedDeliveriesDetailsResponseModel {
   ProcessedDeliveriesDetailsResponseModel({
@@ -25,21 +21,19 @@ class ProcessedDeliveriesDetailsResponseModel {
   ProcessedDeliveryDetailsData data;
   String message;
 
-  factory ProcessedDeliveriesDetailsResponseModel.fromJson(
-          Map<String, dynamic> json) =>
-      ProcessedDeliveriesDetailsResponseModel(
-        status: json["status"],
-        success: json["success"],
-        data: ProcessedDeliveryDetailsData.fromJson(json["data"]),
-        message: json["message"],
-      );
+  factory ProcessedDeliveriesDetailsResponseModel.fromJson(Map<String, dynamic> json) => ProcessedDeliveriesDetailsResponseModel(
+    status: json["status"],
+    success: json["success"],
+    data: ProcessedDeliveryDetailsData.fromJson(json["data"]),
+    message: json["message"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "success": success,
-        "data": data.toJson(),
-        "message": message,
-      };
+    "status": status,
+    "success": success,
+    "data": data.toJson(),
+    "message": message,
+  };
 }
 
 class ProcessedDeliveryDetailsData {
@@ -55,18 +49,17 @@ class ProcessedDeliveryDetailsData {
   String invoiceNumber;
   int deliveryCharge;
 
-  factory ProcessedDeliveryDetailsData.fromJson(Map<String, dynamic> json) =>
-      ProcessedDeliveryDetailsData(
-        discount: json["Discount"],
-        total: json["Total"],
-        invoiceNumber: json["InvoiceNumber"],
-        deliveryCharge: json["DeliveryCharge"],
-      );
+  factory ProcessedDeliveryDetailsData.fromJson(Map<String, dynamic> json) => ProcessedDeliveryDetailsData(
+    discount: json["Discount"],
+    total: json["Total"],
+    invoiceNumber: json["InvoiceNumber"],
+    deliveryCharge: json["DeliveryCharge"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "Discount": discount,
-        "Total": total,
-        "InvoiceNumber": invoiceNumber,
-        "DeliveryCharge": deliveryCharge,
-      };
+    "Discount": discount,
+    "Total": total,
+    "InvoiceNumber": invoiceNumber,
+    "DeliveryCharge": deliveryCharge,
+  };
 }

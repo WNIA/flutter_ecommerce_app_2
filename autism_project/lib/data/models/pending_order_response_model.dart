@@ -24,19 +24,16 @@ class PendingOrderResponseModel {
       PendingOrderResponseModel(
         status: json["status"],
         success: json["success"],
-        data: List<PendingOrderData>.from(
-            json["data"].map((x) => PendingOrderData.fromJson(x))),
+        data: List<PendingOrderData>.from(json["data"].map((x) => PendingOrderData.fromJson(x))),
         message: json["message"],
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "status": status,
         "success": success,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "message": message,
       };
-
 }
 
 class PendingOrderData {
@@ -70,8 +67,7 @@ class PendingOrderData {
   String picture;
   double distance;
 
-  factory PendingOrderData.fromJson(Map<String, dynamic> json) =>
-      PendingOrderData(
+  factory PendingOrderData.fromJson(Map<String, dynamic> json) => PendingOrderData(
         id: json["Id"],
         shopId: json["ShopId"],
         customerId: json["CustomerId"],

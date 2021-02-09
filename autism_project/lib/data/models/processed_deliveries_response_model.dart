@@ -1,12 +1,8 @@
 import 'dart:convert';
 
-ProcessedDeliveriesResponseModel processedDeliveriesResponseModelFromJson(
-        String str) =>
-    ProcessedDeliveriesResponseModel.fromJson(json.decode(str));
+ProcessedDeliveriesResponseModel processedDeliveriesResponseModelFromJson(String str) => ProcessedDeliveriesResponseModel.fromJson(json.decode(str));
 
-String processedDeliveriesResponseModelToJson(
-        ProcessedDeliveriesResponseModel data) =>
-    json.encode(data.toJson());
+String processedDeliveriesResponseModelToJson(ProcessedDeliveriesResponseModel data) => json.encode(data.toJson());
 
 class ProcessedDeliveriesResponseModel {
   ProcessedDeliveriesResponseModel({
@@ -21,22 +17,19 @@ class ProcessedDeliveriesResponseModel {
   List<ProcessedDeliveryData> data;
   String message;
 
-  factory ProcessedDeliveriesResponseModel.fromJson(
-          Map<String, dynamic> json) =>
-      ProcessedDeliveriesResponseModel(
-        status: json["status"],
-        success: json["success"],
-        data: List<ProcessedDeliveryData>.from(
-            json["data"].map((x) => ProcessedDeliveryData.fromJson(x))),
-        message: json["message"],
-      );
+  factory ProcessedDeliveriesResponseModel.fromJson(Map<String, dynamic> json) => ProcessedDeliveriesResponseModel(
+    status: json["status"],
+    success: json["success"],
+    data: List<ProcessedDeliveryData>.from(json["data"].map((x) => ProcessedDeliveryData.fromJson(x))),
+    message: json["message"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "success": success,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "message": message,
-      };
+    "status": status,
+    "success": success,
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "message": message,
+  };
 }
 
 class ProcessedDeliveryData {
@@ -76,42 +69,41 @@ class ProcessedDeliveryData {
   int orderId;
   double distance;
 
-  factory ProcessedDeliveryData.fromJson(Map<String, dynamic> json) =>
-      ProcessedDeliveryData(
-        name: json["Name"],
-        email: json["Email"],
-        mobileNumber: json["MobileNumber"],
-        picture: json["Picture"],
-        orderLatitude: json["OrderLatitude"].toDouble(),
-        orderLongitude: json["OrderLongitude"].toDouble(),
-        shopId: json["ShopId"],
-        id: json["Id"],
-        invoiceNumber: json["InvoiceNumber"],
-        deliveryCharge: json["DeliveryCharge"],
-        orderDetails: json["OrderDetails"],
-        status: json["Status"],
-        created: DateTime.parse(json["Created"]),
-        customerId: json["CustomerId"],
-        orderId: json["OrderId"],
-        distance: json["distance"].toDouble(),
-      );
+  factory ProcessedDeliveryData.fromJson(Map<String, dynamic> json) => ProcessedDeliveryData(
+    name: json["Name"],
+    email: json["Email"],
+    mobileNumber: json["MobileNumber"],
+    picture: json["Picture"],
+    orderLatitude: json["OrderLatitude"].toDouble(),
+    orderLongitude: json["OrderLongitude"].toDouble(),
+    shopId: json["ShopId"],
+    id: json["Id"],
+    invoiceNumber: json["InvoiceNumber"],
+    deliveryCharge: json["DeliveryCharge"],
+    orderDetails: json["OrderDetails"],
+    status: json["Status"],
+    created: DateTime.parse(json["Created"]),
+    customerId: json["CustomerId"],
+    orderId: json["OrderId"],
+    distance: json["distance"].toDouble(),
+  );
 
   Map<String, dynamic> toJson() => {
-        "Name": name,
-        "Email": email,
-        "MobileNumber": mobileNumber,
-        "Picture": picture,
-        "OrderLatitude": orderLatitude,
-        "OrderLongitude": orderLongitude,
-        "ShopId": shopId,
-        "Id": id,
-        "InvoiceNumber": invoiceNumber,
-        "DeliveryCharge": deliveryCharge,
-        "OrderDetails": orderDetails,
-        "Status": status,
-        "Created": created.toIso8601String(),
-        "CustomerId": customerId,
-        "OrderId": orderId,
-        "distance": distance,
-      };
+    "Name": name,
+    "Email": email,
+    "MobileNumber": mobileNumber,
+    "Picture": picture,
+    "OrderLatitude": orderLatitude,
+    "OrderLongitude": orderLongitude,
+    "ShopId": shopId,
+    "Id": id,
+    "InvoiceNumber": invoiceNumber,
+    "DeliveryCharge": deliveryCharge,
+    "OrderDetails": orderDetails,
+    "Status": status,
+    "Created": created.toIso8601String(),
+    "CustomerId": customerId,
+    "OrderId": orderId,
+    "distance": distance,
+  };
 }
