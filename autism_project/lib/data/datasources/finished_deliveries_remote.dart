@@ -3,23 +3,31 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:autism_project/data/models/finished_deliveries_response_model.dart';
-import 'package:flutter/material.dart';
 
-class FinishedDeliveriesAPIService extends ChangeNotifier{
-  fetchFinishedDeliveriesPagination(int page, String token) async {
+abstract class FinishedDeliveriesRemoteDataSource {
+  Future<FinishedDeliveriesResponseModel> fetchFinishedDeliveriesPagination(
+      int page, String token);
+}
+
+class FinishedDeliveriesAPIService
+    implements FinishedDeliveriesRemoteDataSource {
+  @override
+  Future<FinishedDeliveriesResponseModel> fetchFinishedDeliveriesPagination(
+          int page, String token) =>
+      _fetchFinishedDeliveriesPagination(page, token);
+
+  Future<FinishedDeliveriesResponseModel> _fetchFinishedDeliveriesPagination(
+      int page, String token) async {
     try {
       final stringBuffer = StringBuffer();
       final completer = Completer<String>();
 
       String stringToDecode = "";
-      List data = new List();
-      FinishedDeliveriesResponseModel responseModel = new FinishedDeliveriesResponseModel();
-      String _token = token;
       final client = HttpClient();
-      final request = await client.postUrl(Uri.parse("http://199.192.28.11/stationary/v1/get-delivery-own-deliveries-pagination.php"));
-      request.headers.set("Authorization", _token, preserveHeaderCase: true);
-      request.write(
-          '{"limit": 10,"page": $page}');
+      final request = await client.postUrl(Uri.parse(
+          "http://199.192.28.11/stationary/v1/get-delivery-own-deliveries-pagination.php"));
+      request.headers.set("Authorization", token, preserveHeaderCase: true);
+      request.write('{"limit": 10,"page": $page}');
       final response = await request.close();
       print(response.statusCode);
       response.transform(utf8.decoder).listen((contents) {
@@ -27,16 +35,9 @@ class FinishedDeliveriesAPIService extends ChangeNotifier{
       }, onDone: () => completer.complete(stringBuffer.toString()));
       stringToDecode = await completer.future;
       print(stringToDecode);
-      responseModel = finishedDeliveriesResponseModelFromJson(stringToDecode);
-      int len = responseModel.data.length;
-      for (int i = 0; i < len; i++) {
-        data.add(responseModel.data[i].toJson());
-      }
-      notifyListeners();
-      return data;
+      return finishedDeliveriesResponseModelFromJson(stringToDecode);
     } catch (e) {
       print(e);
     }
   }
-
 }

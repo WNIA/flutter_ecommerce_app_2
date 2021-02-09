@@ -3,32 +3,22 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:autism_project/data/models/pending_order_response_model.dart';
-import 'package:flutter/material.dart';
 
-List<PendingOrderAPIService> _customerPendingOrder;
+abstract class PendingOrderRemoteDataSource {}
 
-List<PendingOrderAPIService> get customerPendingOrderList =>
-    _customerPendingOrder;
-
-/*
-      * fetch data from server
-      * HttpClient used to preserve header
-      * Data chunks are stored in StringBuffer -> Completer[when completed] -> String[for json.decode] -> List[returns]
-      * @WNIA*/
-class PendingOrderAPIService extends ChangeNotifier{
-
-  fetchPendingOrderPagination(int page, String token) async {
+class PendingOrderAPIService implements PendingOrderRemoteDataSource {
+  Future<PendingOrderResponseModel> fetchPendingOrderPagination(
+      int page, String token) async {
     try {
       final stringBuffer = StringBuffer();
       final completer = Completer<String>();
 
       String stringToDecode = "";
-      List data = new List();
-      PendingOrderResponseModel responseModel = new PendingOrderResponseModel();
 
       String _token = token;
       final client = HttpClient();
-      final request = await client.postUrl(Uri.parse("http://199.192.28.11/stationary/v1/get-delivery-pending-order-pagination.php"));
+      final request = await client.postUrl(Uri.parse(
+          "http://199.192.28.11/stationary/v1/get-delivery-pending-order-pagination.php"));
       request.headers
           .set("Content-Type", "application/json", preserveHeaderCase: true);
       request.headers
@@ -42,15 +32,7 @@ class PendingOrderAPIService extends ChangeNotifier{
         stringBuffer.write(contents);
       }, onDone: () => completer.complete(stringBuffer.toString()));
       stringToDecode = await completer.future;
-      print(stringToDecode);
-      responseModel = pendingOrderResponseFromJson(stringToDecode);
-
-      int len = responseModel.data.length;
-      for (int i = 0; i < len; i++) {
-        data.add(responseModel.data[i].toJson());
-      }
-      notifyListeners();
-      return data;
+      return pendingOrderResponseFromJson(stringToDecode);
     } catch (e) {
       print(e);
     }

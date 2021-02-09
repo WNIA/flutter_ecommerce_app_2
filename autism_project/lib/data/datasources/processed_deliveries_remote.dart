@@ -6,7 +6,10 @@ import 'package:autism_project/data/models/processed_deliveries_response_model.d
 import 'package:autism_project/data/models/processed_delivery_details_response_model.dart';
 import 'package:autism_project/data/models/processed_delivery_list_response_model.dart';
 
-class ProcessedDeliveriesAPIService {
+abstract class ProcessDeliveriesRemoteDataSource {}
+
+class ProcessedDeliveriesAPIService
+    implements ProcessDeliveriesRemoteDataSource {
   Future<ProcessedDeliveriesResponseModel> fetchProcessedDeliveriesPagination(
       int page, String token) async {
     final stringBuffer = StringBuffer();

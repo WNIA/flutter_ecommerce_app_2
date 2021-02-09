@@ -1,5 +1,4 @@
 import 'package:autism_project/core/helper/sign_out.dart';
-import 'package:autism_project/data/datasources/profile_api_service.dart';
 import 'package:autism_project/data/models/login_and_profile_response_model.dart';
 import 'package:autism_project/presentation/ui/update_profile_page.dart';
 import 'package:autism_project/presentation/widgets/appbar_widget.dart';
