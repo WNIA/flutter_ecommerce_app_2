@@ -40,24 +40,25 @@ class LoginAndProfileAPIService implements LoginAndProfileRemoteDataSource {
   }
 
   Future<LoginAndProfileResponseModel> _fetchProfileData() async {
-    try {
-      String stringToDecode = "";
-      final client = HttpClient();
-      final stringBuffer = StringBuffer();
-      final completer = Completer();
-      final request = await client.getUrl(Uri.parse(
-          "http://199.192.28.11/stationary/v1/get-delivery-user-profile.php"));
-      request.headers
-          .set("Authorization", Constants.myToken, preserveHeaderCase: true);
-      final response = await request.close();
-      print(response.statusCode);
-      response.transform(utf8.decoder).listen((event) {
-        stringBuffer.write(event);
-      }, onDone: () => completer.complete(stringBuffer.toString()));
-      stringToDecode = await completer.future;
+    String stringToDecode = "";
+    final client = HttpClient();
+    final stringBuffer = StringBuffer();
+    final completer = Completer();
+    final request = await client.getUrl(Uri.parse(
+        "http://199.192.28.11/stationary/v1/get-delivery-user-profile.php"));
+    request.headers
+        .set("Authorization", Constants.myToken, preserveHeaderCase: true);
+
+    final response = await request.close();
+    response.transform(utf8.decoder).listen((event) {
+      stringBuffer.write(event);
+    }, onDone: () => completer.complete(stringBuffer.toString()));
+    stringToDecode = await completer.future;
+
+    if (response.statusCode == 200) {
       return loginAndProfileResponseFromJson(stringToDecode);
-    } catch (e) {
-      print(e);
+    } else {
+      throw Exception('Unable to fetch Data from rest api');
     }
   }
 }

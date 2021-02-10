@@ -46,13 +46,19 @@ class ProcessedDeliveriesAPIService
     request.headers.set("Authorization", token, preserveHeaderCase: true);
     request.write(
         '{"limit": 10,"page": $page,"Latitude": 23.8084641,"Longititude": 90.4277429}');
+
     final response = await request.close();
     print(response.statusCode);
     response.transform(utf8.decoder).listen((contents) {
       stringBuffer.write(contents);
     }, onDone: () => completer.complete(stringBuffer.toString()));
     stringToDecode = await completer.future;
-    return processedDeliveriesResponseModelFromJson(stringToDecode);
+
+    if (response.statusCode == 200) {
+      return processedDeliveriesResponseModelFromJson(stringToDecode);
+    } else {
+      throw Exception('Unable to fetch Data from rest api');
+    }
   }
 
   Future<ProcessedDeliveriesListResponseModel> _fetchProcessedDeliveriesList(
@@ -66,13 +72,19 @@ class ProcessedDeliveriesAPIService
         "http://199.192.28.11/stationary/v1/customer-order-products-delivery.php"));
     request.headers.set("Authorization", token, preserveHeaderCase: true);
     request.write('{"OrderId": $orderId}');
+
     final response = await request.close();
     print(response.statusCode);
     response.transform(utf8.decoder).listen((contents) {
       stringBuffer.write(contents);
     }, onDone: () => completer.complete(stringBuffer.toString()));
     stringToDecode = await completer.future;
-    return processedDeliveriesListResponseModelFromJson(stringToDecode);
+
+    if (response.statusCode == 200) {
+      return processedDeliveriesListResponseModelFromJson(stringToDecode);
+    } else {
+      throw Exception('Unable to fetch Data from rest api');
+    }
   }
 
   Future<ProcessedDeliveriesDetailsResponseModel>
@@ -86,13 +98,18 @@ class ProcessedDeliveriesAPIService
         "http://199.192.28.11/stationary/v1/get-delivery-customer-order-details.php"));
     request.headers.set("Authorization", token, preserveHeaderCase: true);
     request.write('{"OrderId": $orderId}');
+
     final response = await request.close();
     response.transform(utf8.decoder).listen((contents) {
       stringBuffer.write(contents);
     }, onDone: () => completer.complete(stringBuffer.toString()));
     stringToDecode = await completer.future;
     print(stringToDecode);
-    print('details');
-    return processedDeliveriesDetailsResponseModelFromJson(stringToDecode);
+
+    if (response.statusCode == 200) {
+      return processedDeliveriesDetailsResponseModelFromJson(stringToDecode);
+    } else {
+      throw Exception('Unable to fetch Data from rest api');
+    }
   }
 }

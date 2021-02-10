@@ -18,26 +18,27 @@ class FinishedDeliveriesAPIService
 
   Future<FinishedDeliveriesResponseModel> _fetchFinishedDeliveriesPagination(
       int page, String token) async {
-    try {
-      final stringBuffer = StringBuffer();
-      final completer = Completer<String>();
+    final stringBuffer = StringBuffer();
+    final completer = Completer<String>();
 
-      String stringToDecode = "";
-      final client = HttpClient();
-      final request = await client.postUrl(Uri.parse(
-          "http://199.192.28.11/stationary/v1/get-delivery-own-deliveries-pagination.php"));
-      request.headers.set("Authorization", token, preserveHeaderCase: true);
-      request.write('{"limit": 10,"page": $page}');
-      final response = await request.close();
-      print(response.statusCode);
-      response.transform(utf8.decoder).listen((contents) {
-        stringBuffer.write(contents);
-      }, onDone: () => completer.complete(stringBuffer.toString()));
-      stringToDecode = await completer.future;
-      print(stringToDecode);
+    String stringToDecode = "";
+    final client = HttpClient();
+    final request = await client.postUrl(Uri.parse(
+        "http://199.192.28.11/stationary/v1/get-delivery-own-deliveries-pagination.php"));
+    request.headers.set("Authorization", token, preserveHeaderCase: true);
+    request.write('{"limit": 10,"page": $page}');
+
+    final response = await request.close();
+    print(response.statusCode);
+    response.transform(utf8.decoder).listen((contents) {
+      stringBuffer.write(contents);
+    }, onDone: () => completer.complete(stringBuffer.toString()));
+    stringToDecode = await completer.future;
+
+    if (response.statusCode == 200) {
       return finishedDeliveriesResponseModelFromJson(stringToDecode);
-    } catch (e) {
-      print(e);
+    } else {
+      throw Exception('Unable to fetch Data from rest api');
     }
   }
 }
