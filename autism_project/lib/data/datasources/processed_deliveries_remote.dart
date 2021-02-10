@@ -7,7 +7,7 @@ import 'package:autism_project/data/models/processed_delivery_details_response_m
 import 'package:autism_project/data/models/processed_delivery_list_response_model.dart';
 
 abstract class ProcessDeliveriesRemoteDataSource {
-  Future<ProcessedDeliveriesResponseModel> fetchProcessedDeliveriesPagination(
+  Future<ProcessedDeliveriesResponseEntity> fetchProcessedDeliveriesPagination(
       int page, String token);
 
   Future<ProcessedDeliveriesListResponseModel> fetchProcessedDeliveriesList(
@@ -20,7 +20,7 @@ abstract class ProcessDeliveriesRemoteDataSource {
 class ProcessedDeliveriesAPIService
     implements ProcessDeliveriesRemoteDataSource {
   @override
-  Future<ProcessedDeliveriesResponseModel> fetchProcessedDeliveriesPagination(
+  Future<ProcessedDeliveriesResponseEntity> fetchProcessedDeliveriesPagination(
           int page, String token) =>
       _fetchProcessedDeliveriesPagination(page, token);
 
@@ -34,7 +34,7 @@ class ProcessedDeliveriesAPIService
       fetchProcessedDeliveriesDetails(String token, int orderId) =>
           _fetchProcessedDeliveriesDetails(token, orderId);
 
-  Future<ProcessedDeliveriesResponseModel> _fetchProcessedDeliveriesPagination(
+  Future<ProcessedDeliveriesResponseEntity> _fetchProcessedDeliveriesPagination(
       int page, String token) async {
     final stringBuffer = StringBuffer();
     final completer = Completer<String>();
