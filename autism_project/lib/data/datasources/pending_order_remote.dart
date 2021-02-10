@@ -4,10 +4,18 @@ import 'dart:io';
 
 import 'package:autism_project/data/models/pending_order_response_model.dart';
 
-abstract class PendingOrderRemoteDataSource {}
+abstract class PendingOrderRemoteDataSource {
+  Future<PendingOrderResponseModel> fetchPendingOrderPagination(
+      int page, String token);
+}
 
 class PendingOrderAPIService implements PendingOrderRemoteDataSource {
+  @override
   Future<PendingOrderResponseModel> fetchPendingOrderPagination(
+          int page, String token) =>
+      _fetchPendingOrderPagination(page, token);
+
+  Future<PendingOrderResponseModel> _fetchPendingOrderPagination(
       int page, String token) async {
     try {
       final stringBuffer = StringBuffer();

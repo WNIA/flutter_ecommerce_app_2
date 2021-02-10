@@ -6,11 +6,35 @@ import 'package:autism_project/data/models/processed_deliveries_response_model.d
 import 'package:autism_project/data/models/processed_delivery_details_response_model.dart';
 import 'package:autism_project/data/models/processed_delivery_list_response_model.dart';
 
-abstract class ProcessDeliveriesRemoteDataSource {}
+abstract class ProcessDeliveriesRemoteDataSource {
+  Future<ProcessedDeliveriesResponseModel> fetchProcessedDeliveriesPagination(
+      int page, String token);
+
+  Future<ProcessedDeliveriesListResponseModel> fetchProcessedDeliveriesList(
+      String token, int orderId);
+
+  Future<ProcessedDeliveriesDetailsResponseModel>
+      fetchProcessedDeliveriesDetails(String token, int orderId);
+}
 
 class ProcessedDeliveriesAPIService
     implements ProcessDeliveriesRemoteDataSource {
+  @override
   Future<ProcessedDeliveriesResponseModel> fetchProcessedDeliveriesPagination(
+          int page, String token) =>
+      _fetchProcessedDeliveriesPagination(page, token);
+
+  @override
+  Future<ProcessedDeliveriesListResponseModel> fetchProcessedDeliveriesList(
+          String token, int orderId) =>
+      _fetchProcessedDeliveriesList(token, orderId);
+
+  @override
+  Future<ProcessedDeliveriesDetailsResponseModel>
+      fetchProcessedDeliveriesDetails(String token, int orderId) =>
+          _fetchProcessedDeliveriesDetails(token, orderId);
+
+  Future<ProcessedDeliveriesResponseModel> _fetchProcessedDeliveriesPagination(
       int page, String token) async {
     final stringBuffer = StringBuffer();
     final completer = Completer<String>();
@@ -31,7 +55,7 @@ class ProcessedDeliveriesAPIService
     return processedDeliveriesResponseModelFromJson(stringToDecode);
   }
 
-  Future<ProcessedDeliveriesListResponseModel> fetchProcessedDeliveriesList(
+  Future<ProcessedDeliveriesListResponseModel> _fetchProcessedDeliveriesList(
       String token, int orderId) async {
     final stringBuffer = StringBuffer();
     final completer = Completer<String>();
@@ -52,7 +76,7 @@ class ProcessedDeliveriesAPIService
   }
 
   Future<ProcessedDeliveriesDetailsResponseModel>
-      fetchProcessedDeliveriesDetails(String token, int orderId) async {
+      _fetchProcessedDeliveriesDetails(String token, int orderId) async {
     final stringBuffer = StringBuffer();
     final completer = Completer<String>();
 
