@@ -1,21 +1,18 @@
 import 'dart:convert';
 
+import 'package:autism_project/domain/entity/processed_deliveries_response_entity.dart';
+
 ProcessedDeliveriesResponseModel processedDeliveriesResponseModelFromJson(String str) => ProcessedDeliveriesResponseModel.fromJson(json.decode(str));
 
 String processedDeliveriesResponseModelToJson(ProcessedDeliveriesResponseModel data) => json.encode(data.toJson());
 
-class ProcessedDeliveriesResponseModel {
+class ProcessedDeliveriesResponseModel extends ProcessedDeliveriesResponseEntity {
   ProcessedDeliveriesResponseModel({
-    this.status,
-    this.success,
-    this.data,
-    this.message,
-  });
-
-  int status;
-  bool success;
-  List<ProcessedDeliveryData> data;
-  String message;
+    int status,
+    bool success,
+    List<ProcessedDeliveryData> data,
+    String message,
+  }) : super(status: status, success: success, data: data, message: message);
 
   factory ProcessedDeliveriesResponseModel.fromJson(Map<String, dynamic> json) => ProcessedDeliveriesResponseModel(
     status: json["status"],

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:autism_project/domain/entity/pending_order_response_entity.dart';
+
 
 PendingOrderResponseModel pendingOrderResponseFromJson(String str) =>
     PendingOrderResponseModel.fromJson(json.decode(str));
@@ -7,18 +9,13 @@ PendingOrderResponseModel pendingOrderResponseFromJson(String str) =>
 String pendingOrderResponseToJson(PendingOrderResponseModel data) =>
     json.encode(data.toJson());
 
-class PendingOrderResponseModel {
+class PendingOrderResponseModel extends PendingOrderResponseEntity{
   PendingOrderResponseModel({
-    this.status,
-    this.success,
-    this.data,
-    this.message,
-  });
-
-  int status;
-  bool success;
-  List<PendingOrderData> data;
-  String message;
+    int status,
+    bool success,
+    List<PendingOrderData> data,
+    String message,
+  }) : super(status: status, success: success, data: data, message: message);
 
   factory PendingOrderResponseModel.fromJson(Map<String, dynamic> json) =>
       PendingOrderResponseModel(

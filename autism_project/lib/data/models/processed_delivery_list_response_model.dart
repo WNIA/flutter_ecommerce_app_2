@@ -1,25 +1,22 @@
-// To parse this JSON data, do
+ // To parse this JSON data, do
 //
 //     final processedDeliveriesListResponseModel = processedDeliveriesListResponseModelFromJson(jsonString);
 
 import 'dart:convert';
 
+import 'package:autism_project/domain/entity/processed_delivery_list_response_entity.dart';
+
 ProcessedDeliveriesListResponseModel processedDeliveriesListResponseModelFromJson(String str) => ProcessedDeliveriesListResponseModel.fromJson(json.decode(str));
 
 String processedDeliveriesListResponseModelToJson(ProcessedDeliveriesListResponseModel data) => json.encode(data.toJson());
 
-class ProcessedDeliveriesListResponseModel {
+class ProcessedDeliveriesListResponseModel extends ProcessedDeliveriesListResponseEntity{
   ProcessedDeliveriesListResponseModel({
-    this.status,
-    this.success,
-    this.data,
-    this.message,
-  });
-
-  int status;
-  bool success;
-  List<ProcessedDeliveryListData> data;
-  String message;
+    int status,
+    bool success,
+    List<ProcessedDeliveryListData> data,
+    String message,
+  }) : super(status: status, success: success, data: data, message: message);
 
   factory ProcessedDeliveriesListResponseModel.fromJson(Map<String, dynamic> json) => ProcessedDeliveriesListResponseModel(
     status: json["status"],

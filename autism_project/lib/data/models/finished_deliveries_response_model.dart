@@ -1,26 +1,24 @@
 import 'dart:convert';
 
+import 'package:autism_project/domain/entity/finished_deliveries_response_entity.dart';
+
 FinishedDeliveriesResponseModel finishedDeliveriesResponseModelFromJson(String str) => FinishedDeliveriesResponseModel.fromJson(json.decode(str));
 
 String finishedDeliveriesResponseModelToJson(FinishedDeliveriesResponseModel data) => json.encode(data.toJson());
 
-class FinishedDeliveriesResponseModel {
+class FinishedDeliveriesResponseModel extends FinishedDeliveriesResponseEntity {
   FinishedDeliveriesResponseModel({
-    this.status,
-    this.success,
-    this.data,
-    this.message,
-  });
+    int status,
+    bool success,
+    List<FinishedDeliveriesResponseData> data,
+    String message,
+  }) : super(status: status, success: success, data: data, message: message);
 
-  int status;
-  bool success;
-  List<Data> data;
-  String message;
 
   factory FinishedDeliveriesResponseModel.fromJson(Map<String, dynamic> json) => FinishedDeliveriesResponseModel(
     status: json["status"],
     success: json["success"],
-    data: List<Data>.from(json["data"].map((x) => Data.fromJson(x))),
+    data: List<FinishedDeliveriesResponseData>.from(json["data"].map((x) => FinishedDeliveriesResponseData.fromJson(x))),
     message: json["message"],
   );
 
@@ -32,8 +30,8 @@ class FinishedDeliveriesResponseModel {
   };
 }
 
-class Data {
-  Data({
+class FinishedDeliveriesResponseData {
+  FinishedDeliveriesResponseData({
     this.name,
     this.email,
     this.mobileNumber,
@@ -67,7 +65,7 @@ class Data {
   DateTime created;
   int customerId;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory FinishedDeliveriesResponseData.fromJson(Map<String, dynamic> json) => FinishedDeliveriesResponseData(
     name: json["Name"],
     email: json["Email"],
     mobileNumber: json["MobileNumber"],

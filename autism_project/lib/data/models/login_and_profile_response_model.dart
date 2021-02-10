@@ -1,23 +1,19 @@
 import 'dart:convert';
 
+import 'package:autism_project/domain/entity/login_and_profile_response_entity.dart';
+
 LoginAndProfileResponseModel loginAndProfileResponseFromJson(String str) => LoginAndProfileResponseModel.fromJson(json.decode(str));
 
 String loginAndProfileResponseToJson(LoginAndProfileResponseModel data) => json.encode(data.toJson());
 
-class LoginAndProfileResponseModel {
-  final int status;
-  final bool success;
-  final String jwt;
-  final LoginAndProfileData data;
-  final String message;
-
+class LoginAndProfileResponseModel extends LoginAndProfileResponseEntity {
   LoginAndProfileResponseModel({
-    this.status,
-    this.success,
-    this.jwt,
-    this.data,
-    this.message,
-  });
+    int status,
+    bool success,
+    String jwt,
+    LoginAndProfileData data,
+    String message,
+  }) : super(status: status, success: success, jwt: jwt, data: data, message: message);
 
   factory LoginAndProfileResponseModel.fromJson(Map<String, dynamic> json) => LoginAndProfileResponseModel(
     status: json["status"],
