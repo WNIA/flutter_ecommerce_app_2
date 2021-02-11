@@ -1,3 +1,7 @@
+import 'package:autism_project/domain/repository/finished_deliveries_repository.dart';
+import 'package:autism_project/domain/repository/login_and_profile_repository.dart';
+import 'package:autism_project/domain/repository/pending_order_repository.dart';
+import 'package:autism_project/domain/repository/processed_deliveries_repository.dart';
 import 'package:autism_project/domain/usecase/finished_deliveries_usecase.dart';
 import 'package:autism_project/domain/usecase/login_and_profile_usecase.dart';
 import 'package:autism_project/domain/usecase/pending_order_usecase.dart';
@@ -17,6 +21,27 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ProcessedDeliveriesUseCase(sl()));
   sl.registerLazySingleton(() => PendingOrderUseCase(sl()));
   sl.registerLazySingleton(() => LoginAndProfileUseCase(sl()));
-  
+  //Repository
+  sl.registerLazySingleton<FinishedDeliveriesRepository>(
+      () => FinishedDeliveriesRepositoryImpl(
+            remoteDataSource: sl(),
+            networkInfo: sl(),
+          ));
+  sl.registerLazySingleton(() => ProcessedDeliveriesRepositoryImpl(
+        networkInfo: sl(),
+        processDeliveriesRemoteDataSource: sl(),
+      ));
+  sl.registerLazySingleton(() => PendingOrderRepositoryImpl(
+        networkInfo: sl(),
+        pendingOrderRemoteDataSource: sl(),
+      ));
+  sl.registerLazySingleton(() => LoginAndProfileRepositoryImpl(
+        networkInfo: sl(),
+        loginAndProfileRemoteDataSource: sl(),
+      ));
+  //Data Sources
 
+  //Core
+
+  //External
 }
