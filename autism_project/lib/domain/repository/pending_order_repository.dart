@@ -20,10 +20,6 @@ class PendingOrderRepositoryImpl implements PendingOrderRepository {
   @override
   Future<Either<Failure, PendingOrderResponseEntity>> getPendingOrderResponse(
       int page, String token) async {
-    return _getPendingOrderResponse(page, token);
-  }
-  Future<Either<Failure, PendingOrderResponseEntity>> _getPendingOrderResponse(
-      int page, String token) async {
     if(await networkInfo.isConnected){
       try{
         final remoteData = await pendingOrderRemoteDataSource.fetchPendingOrderPagination(page, token);
@@ -32,5 +28,6 @@ class PendingOrderRepositoryImpl implements PendingOrderRepository {
         Left(ServerFailure());
       }
     }
+
   }
 }

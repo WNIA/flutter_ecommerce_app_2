@@ -20,18 +20,14 @@ class FinishedDeliveriesRepositoryImpl implements FinishedDeliveriesRepository {
   @override
   Future<Either<Failure, FinishedDeliveriesResponseEntity>>
       getFinishedDeliveriesResponse(int page, String token) async {
-    return _getFinishedDeliveries(page, token);
-  }
-
-  Future<Either<Failure, FinishedDeliveriesResponseEntity>> _getFinishedDeliveries(int page, String token) async {
     if(await networkInfo.isConnected) {
       try{
         final remoteData = await remoteDataSource.fetchFinishedDeliveriesPagination(page, token);
         return Right(remoteData);
       }on ServerException{
         return Left(ServerFailure());
-
       }
     }
+
   }
 }

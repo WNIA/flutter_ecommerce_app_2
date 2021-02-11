@@ -3,7 +3,7 @@ import 'package:autism_project/core/error/failure.dart';
 import 'package:autism_project/core/network/network_info.dart';
 import 'package:autism_project/data/datasources/processed_deliveries_remote.dart';
 import 'package:autism_project/data/models/processed_deliveries_response_model.dart';
-import 'package:autism_project/data/models/processed_delivery_details_response_model.dart';
+import 'package:autism_project/domain/entity/processed_deliveries_response_entity.dart';
 import 'package:autism_project/domain/entity/processed_delivery_details_response_entity.dart';
 import 'package:autism_project/domain/entity/processed_delivery_list_response_entity.dart';
 import 'package:dartz/dartz.dart';
@@ -40,7 +40,7 @@ class ProcessedDeliveriesRepositoryImpl
   }
 
   @override
-  Future<Either<Failure, ProcessedDeliveriesResponseEntity>>
+  Future<Either<Failure, ProcessedDeliveriesResponseModel>>
       getProcessedDeliveriesPagination(int page, String token) async {
     return await _getData(processDeliveriesRemoteDataSource.fetchProcessedDeliveriesPagination(page, token));
   }
