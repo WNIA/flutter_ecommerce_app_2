@@ -6,8 +6,8 @@ class LoginRequestEntity extends Equatable{
     this.password,
   });
 
-  final String email;
-  final String password;
+  String email;
+  String password;
 
   @override
   // TODO: implement props

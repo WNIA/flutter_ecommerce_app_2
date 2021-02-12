@@ -31,7 +31,7 @@ Future<void> init() async {
   sl.registerFactory(() => FinishedDeliveriesProvider());
   sl.registerFactory(() => ProcessedDeliveriesProvider());
   sl.registerFactory(() => PendingOrderProvider());
-  sl.registerFactory(() => LoginAndProfileProvider());
+  sl.registerFactory(() => LoginAndProfileProvider(loginAndProfileUseCase: sl()));
 
   //UseCases
   sl.registerLazySingleton(() => FinishedDeliveriesUseCase(sl()));

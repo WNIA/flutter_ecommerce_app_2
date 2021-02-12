@@ -1,7 +1,7 @@
 import 'package:autism_project/core/helper/shared_preference.dart';
 import 'package:autism_project/core/helper/validators.dart';
-import 'package:autism_project/data/datasources/login_and_profile_remote.dart';
 import 'package:autism_project/data/models/login_request_model.dart';
+import 'package:autism_project/presentation/providers/login_and_profile_provider.dart';
 
 import 'initialize_page.dart';
 
@@ -49,11 +49,13 @@ class _SignInScreenState extends State<SignInScreen> {
         isLoading = true;
       });
       try {
-        Provider.of<LoginAPIService>(context, listen: false).fetchLoginResponse(_loginRequestModel).then((_response) {
-          if (_response != null) {
+        Provider.of<LoginAndProfileProvider>(context, listen: false).getLogin(
+            _loginRequestModel);
+        context.select((LoginAndProfileProvider loginAndProfileProvider) {
+          if (loginAndProfileProvider != null) {
             //TODO: Simplify saving data in shared preferences - @WNIA
-            SharedPrefs.saveUserLoggedInSharedPref(_response.success);
-            SharedPrefs.saveUserJWTSharedPref(_response.jwt);
+            SharedPrefs.saveUserLoggedInSharedPref(loginAndProfileProvider.isLogin);
+            SharedPrefs.saveUserJWTSharedPref(loginAndProfileProvider.loginAndProfileResponseEntity.jwt);
 
             Navigator.pushReplacementNamed(context, Initialize.routeName);
           } else {
@@ -65,7 +67,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 content: Text('Please enter valid credentials'),
                 duration: Duration(seconds: 10)));
           }
-
         });
       } catch (e) {
         print(e);
@@ -175,7 +176,7 @@ class _SignInScreenState extends State<SignInScreen> {
               children: [
                 Text('Don\'t have an account yet?'),
                 FlatButton(
-                    /*
+                  /*
                      * toggle function navigates to Sign Up page
                      * @WNIA
                     */
@@ -191,7 +192,10 @@ class _SignInScreenState extends State<SignInScreen> {
 
   SizedBox submitButton(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.8,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.8,
       height: 45,
       child: RaisedButton(
           onPressed: () {
@@ -199,7 +203,7 @@ class _SignInScreenState extends State<SignInScreen> {
           },
           color: Colors.pink,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           textColor: Colors.white,
           child: Text('Sign In')),
     );
