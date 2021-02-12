@@ -9,6 +9,7 @@ import 'core/utils/route_list.dart';
 import 'dependency_injection.dart' as di;
 
 main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   runApp(MyApp());
 }

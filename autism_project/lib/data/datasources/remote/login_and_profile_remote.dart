@@ -8,23 +8,23 @@ import 'package:autism_project/data/models/login_and_profile_response_model.dart
 import 'package:http/http.dart' as http;
 
 abstract class LoginAndProfileRemoteDataSource {
-  Future<LoginAndProfileResponseModel> fetchLoginResponse(
+  Future<LoginAndProfileResponseModel> fetchLoginResponseRemote(
       LoginRequestModel requestModel);
 
-  Future<LoginAndProfileResponseModel> fetchProfileData();
+  Future<LoginAndProfileResponseModel> fetchProfileDataRemote();
 }
 
 class LoginAndProfileAPIService implements LoginAndProfileRemoteDataSource {
   @override
-  Future<LoginAndProfileResponseModel> fetchLoginResponse(
+  Future<LoginAndProfileResponseModel> fetchLoginResponseRemote(
           LoginRequestModel requestModel) =>
-      _fetchLoginResponse(requestModel);
+      _fetchLoginResponseAPI(requestModel);
 
   @override
-  Future<LoginAndProfileResponseModel> fetchProfileData() =>
-      _fetchProfileData();
+  Future<LoginAndProfileResponseModel> fetchProfileDataRemote() =>
+      _fetchProfileDataAPI();
 
-  Future<LoginAndProfileResponseModel> _fetchLoginResponse(
+  Future<LoginAndProfileResponseModel> _fetchLoginResponseAPI(
       LoginRequestModel requestModel) async {
     String url = "http://199.192.28.11/stationary/v1/login-delivery-api.php";
 
@@ -39,7 +39,7 @@ class LoginAndProfileAPIService implements LoginAndProfileRemoteDataSource {
     }
   }
 
-  Future<LoginAndProfileResponseModel> _fetchProfileData() async {
+  Future<LoginAndProfileResponseModel> _fetchProfileDataAPI() async {
     String stringToDecode = "";
     final client = HttpClient();
     final stringBuffer = StringBuffer();

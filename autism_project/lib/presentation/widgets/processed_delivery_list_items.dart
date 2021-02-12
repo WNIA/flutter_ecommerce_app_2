@@ -1,5 +1,6 @@
 
 import 'package:autism_project/core/helper/constants.dart';
+import 'package:autism_project/presentation/providers/processed_deliveries_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -15,11 +16,8 @@ class ProcessedDeliveryListItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider =
-        Provider.of<ProcessedDeliveriesListAPIService>(context, listen: false);
     return FutureBuilder(
-        future:
-            provider.fetchProcessedDeliveriesList(Constants.myToken, orderId),
+        future: context.read<ProcessedDeliveriesProvider>().getProcessedDeliveriesListProvider(Constants.myToken, orderId),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
           return snapshot.hasData

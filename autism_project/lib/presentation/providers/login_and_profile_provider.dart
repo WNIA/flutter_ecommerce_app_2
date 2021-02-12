@@ -3,7 +3,7 @@ import 'package:autism_project/domain/entity/login_and_profile_response_entity.d
 import 'package:autism_project/domain/usecase/login_and_profile_usecase.dart';
 import 'package:flutter/material.dart';
 
-class LoginAndProfileProvider extends ChangeNotifier {
+class LoginAndProfileProvider with ChangeNotifier {
   final LoginAndProfileUseCase _loginAndProfileUseCase;
 
   LoginAndProfileProvider({@required LoginAndProfileUseCase loginAndProfileUseCase}) : _loginAndProfileUseCase = loginAndProfileUseCase;
@@ -12,8 +12,19 @@ class LoginAndProfileProvider extends ChangeNotifier {
   String error;
   LoginAndProfileResponseEntity loginAndProfileResponseEntity;
 
-  Future<void> getLogin(LoginRequestModel requestModel) async {
-    final result = await _loginAndProfileUseCase.callLogin(requestModel);
+  Future<void> getLoginProvider(LoginRequestModel requestModel) async {
+    final result = await _loginAndProfileUseCase.callLoginResponseUseCase(requestModel);
+    result.fold((l) {
+      error = 'failed attempt';
+      isLogin = false;
+    }, (r) {
+      loginAndProfileResponseEntity = r;
+      isLogin = true;
+    });
+    notifyListeners();
+  }
+  Future<void> getProfileProvider() async {
+    final result = await _loginAndProfileUseCase.callProfileResponseUseCase();
     result.fold((l) {
       error = 'failed attempt';
       isLogin = false;

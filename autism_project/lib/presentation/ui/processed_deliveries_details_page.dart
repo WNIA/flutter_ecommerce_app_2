@@ -1,5 +1,6 @@
 import 'package:autism_project/core/helper/constants.dart';
 import 'package:autism_project/data/models/processed_delivery_details_response_model.dart';
+import 'package:autism_project/presentation/providers/processed_deliveries_provider.dart';
 import 'package:autism_project/presentation/widgets/box_deco_widget.dart';
 import 'package:autism_project/presentation/widgets/processed_delivery_list_items.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,8 @@ class _ProcessedDeliveriesDetailsPageState extends State<ProcessedDeliveriesDeta
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProcessedDeliveriesDetailsAPIService>(context, listen: false);
     return FutureBuilder(
-        future: provider.fetchProcessedDeliveriesDetails(Constants.myToken, widget.orderId),
+        future: context.read<ProcessedDeliveriesProvider>().getProcessedDeliveriesDetailsProvider(Constants.myToken, widget.orderId),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
           return snapshot.hasData

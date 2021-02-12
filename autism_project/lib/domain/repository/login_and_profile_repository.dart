@@ -7,10 +7,10 @@ import 'package:autism_project/domain/entity/login_and_profile_response_entity.d
 import 'package:dartz/dartz.dart';
 
 abstract class LoginAndProfileRepository {
-  Future<Either<Failure, LoginAndProfileResponseEntity>> getLoginResponse(
+  Future<Either<Failure, LoginAndProfileResponseEntity>> getLoginResponseRepository(
       LoginRequestModel requestModel);
 
-  Future<Either<Failure, LoginAndProfileResponseEntity>> getProfileResponse();
+  Future<Either<Failure, LoginAndProfileResponseEntity>> getProfileResponseRepository();
 }
 
 class LoginAndProfileRepositoryImpl implements LoginAndProfileRepository {
@@ -21,16 +21,16 @@ class LoginAndProfileRepositoryImpl implements LoginAndProfileRepository {
       {this.loginAndProfileRemoteDataSource, this.networkInfo});
 
   @override
-  Future<Either<Failure, LoginAndProfileResponseEntity>> getLoginResponse(
+  Future<Either<Failure, LoginAndProfileResponseEntity>> getLoginResponseRepository(
       LoginRequestModel requestModel) async {
     return await _getData(
-        loginAndProfileRemoteDataSource.fetchLoginResponse(requestModel));
+        loginAndProfileRemoteDataSource.fetchLoginResponseRemote(requestModel));
   }
 
   @override
   Future<Either<Failure, LoginAndProfileResponseEntity>>
-      getProfileResponse() async {
-    return await _getData(loginAndProfileRemoteDataSource.fetchProfileData());
+      getProfileResponseRepository() async {
+    return await _getData(loginAndProfileRemoteDataSource.fetchProfileDataRemote());
   }
 
   _getData(Future func) async {

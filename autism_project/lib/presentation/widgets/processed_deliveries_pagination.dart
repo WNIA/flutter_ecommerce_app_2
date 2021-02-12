@@ -1,5 +1,5 @@
 import 'package:autism_project/core/helper/constants.dart';
-import 'package:autism_project/data/datasources/processed_deliveries_remote.dart';
+import 'package:autism_project/presentation/providers/processed_deliveries_provider.dart';
 import 'package:autism_project/presentation/ui/processed_deliveries_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -44,9 +44,7 @@ class _ProcessedDeliveriesPaginationState extends State<ProcessedDeliveriesPagin
       if (_controller.offset >= _controller.position.maxScrollExtent &&
           !_controller.position.outOfRange) {
         print("end scroll.............page.....${widget.currentPage}");
-        List temp = await Provider.of<ProcessedDeliveriesAPIService>(context,
-            listen: false)
-            .fetchProcessedDeliveriesPagination(
+        List temp = await context.read<ProcessedDeliveriesProvider>().getProcessedDeliveriesPaginationProvider(
             widget.currentPage + 1, Constants.myToken);
         // print("....... ${widget.currentPage}");
         widget.data.addAll(temp);

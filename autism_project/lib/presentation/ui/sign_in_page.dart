@@ -49,13 +49,14 @@ class _SignInScreenState extends State<SignInScreen> {
         isLoading = true;
       });
       try {
-        Provider.of<LoginAndProfileProvider>(context, listen: false).getLogin(
-            _loginRequestModel);
+        context.read<LoginAndProfileProvider>().getLoginProvider(_loginRequestModel);
         context.select((LoginAndProfileProvider loginAndProfileProvider) {
-          if (loginAndProfileProvider != null) {
+          if (loginAndProfileProvider.loginAndProfileResponseEntity != null) {
             //TODO: Simplify saving data in shared preferences - @WNIA
-            SharedPrefs.saveUserLoggedInSharedPref(loginAndProfileProvider.isLogin);
-            SharedPrefs.saveUserJWTSharedPref(loginAndProfileProvider.loginAndProfileResponseEntity.jwt);
+            SharedPrefs.saveUserLoggedInSharedPref(
+                loginAndProfileProvider.isLogin);
+            SharedPrefs.saveUserJWTSharedPref(
+                loginAndProfileProvider.loginAndProfileResponseEntity.jwt);
 
             Navigator.pushReplacementNamed(context, Initialize.routeName);
           } else {
@@ -176,7 +177,7 @@ class _SignInScreenState extends State<SignInScreen> {
               children: [
                 Text('Don\'t have an account yet?'),
                 FlatButton(
-                  /*
+                    /*
                      * toggle function navigates to Sign Up page
                      * @WNIA
                     */
@@ -192,10 +193,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   SizedBox submitButton(BuildContext context) {
     return SizedBox(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.8,
+      width: MediaQuery.of(context).size.width * 0.8,
       height: 45,
       child: RaisedButton(
           onPressed: () {
@@ -203,7 +201,7 @@ class _SignInScreenState extends State<SignInScreen> {
           },
           color: Colors.pink,
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           textColor: Colors.white,
           child: Text('Sign In')),
     );
@@ -211,10 +209,6 @@ class _SignInScreenState extends State<SignInScreen> {
 
   overlayProgressbar() {
     return Positioned(
-        child: Container(
-            child: Center(
-                child: CircularProgressIndicator(
-
-                ))));
+        child: Container(child: Center(child: CircularProgressIndicator())));
   }
 }

@@ -5,23 +5,23 @@ import 'dart:io';
 import 'package:autism_project/data/models/pending_order_response_model.dart';
 
 abstract class PendingOrderRemoteDataSource {
-  Future<PendingOrderResponseModel> fetchPendingOrderPagination(
+  Future<List> fetchPendingOrderPaginationRemote(
       int page, String token);
 }
 
 class PendingOrderAPIService implements PendingOrderRemoteDataSource {
   @override
-  Future<PendingOrderResponseModel> fetchPendingOrderPagination(
+  Future<List> fetchPendingOrderPaginationRemote(
           int page, String token) =>
-      _fetchPendingOrderPagination(page, token);
+      _fetchPendingOrderPaginationAPI(page, token);
 
-  Future<PendingOrderResponseModel> _fetchPendingOrderPagination(
+  Future<List> _fetchPendingOrderPaginationAPI(
       int page, String token) async {
     final stringBuffer = StringBuffer();
     final completer = Completer<String>();
 
     String stringToDecode = "";
-
+    List data = [];
     String _token = token;
     final client = HttpClient();
     final request = await client.postUrl(Uri.parse(
@@ -40,7 +40,12 @@ class PendingOrderAPIService implements PendingOrderRemoteDataSource {
     stringToDecode = await completer.future;
 
     if (response.statusCode == 200) {
-      return pendingOrderResponseFromJson(stringToDecode);
+      final result = pendingOrderResponseFromJson(stringToDecode);
+      int len = result.data.length;
+      for (int i = 0; i < len; i++) {
+        data.add(result.data[i].toJson());
+      }
+      return data;
     } else {
       throw Exception('Unable to fetch Data from rest api');
     }

@@ -5,7 +5,6 @@ import 'package:autism_project/core/network/network_info.dart';
 import 'package:autism_project/presentation/providers/login_and_profile_provider.dart';
 import 'package:autism_project/presentation/providers/pending_order_provider.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'data/datasources/remote/finished_deliveries_remote.dart';
 import 'data/datasources/remote/processed_deliveries_remote.dart';
@@ -28,9 +27,9 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   //Providers
-  sl.registerFactory(() => FinishedDeliveriesProvider());
-  sl.registerFactory(() => ProcessedDeliveriesProvider());
-  sl.registerFactory(() => PendingOrderProvider());
+  sl.registerFactory(() => FinishedDeliveriesProvider(finishedDeliveriesUseCase: sl()));
+  sl.registerFactory(() => ProcessedDeliveriesProvider(processedDeliveriesUseCase: sl()));
+  sl.registerFactory(() => PendingOrderProvider(pendingOrderUseCase: sl()));
   sl.registerFactory(() => LoginAndProfileProvider(loginAndProfileUseCase: sl()));
 
   //UseCases

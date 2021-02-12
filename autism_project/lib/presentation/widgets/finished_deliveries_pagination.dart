@@ -1,5 +1,5 @@
 import 'package:autism_project/core/helper/constants.dart';
-import 'file:///D:/AndroidStudioProjects/autism_project_final_repo/autism_project_final_repo/autism_project/lib/data/datasources/remote/finished_deliveries_remote.dart';
+import 'package:autism_project/presentation/providers/finished_deliveries_provider.dart';
 import 'package:autism_project/presentation/ui/finished_deliveries_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,9 +45,7 @@ class _FinishedDeliveriesPaginationState
       if (_controller.offset >= _controller.position.maxScrollExtent &&
           !_controller.position.outOfRange) {
         print("end scroll.............page.....${widget.currentPage}");
-        List temp = await Provider.of<FinishedDeliveriesAPIService>(context,
-                listen: false)
-            .fetchFinishedDeliveriesPagination(
+        List temp = context.read<FinishedDeliveriesProvider>().getFinishedDeliveriesProvider(
                 widget.currentPage + 1, Constants.myToken);
         // print("....... ${widget.currentPage}");
         widget.data.addAll(temp);

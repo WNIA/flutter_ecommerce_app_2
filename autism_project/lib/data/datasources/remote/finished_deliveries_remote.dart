@@ -5,22 +5,22 @@ import 'dart:io';
 import 'package:autism_project/data/models/finished_deliveries_response_model.dart';
 
 abstract class FinishedDeliveriesRemoteDataSource {
-  Future<FinishedDeliveriesResponseModel> fetchFinishedDeliveriesPagination(
+  Future<List> fetchFinishedDeliveriesPaginationRemote(
       int page, String token);
 }
 
 class FinishedDeliveriesAPIService
     implements FinishedDeliveriesRemoteDataSource {
   @override
-  Future<FinishedDeliveriesResponseModel> fetchFinishedDeliveriesPagination(
+  Future<List> fetchFinishedDeliveriesPaginationRemote(
           int page, String token) =>
-      _fetchFinishedDeliveriesPagination(page, token);
+      _fetchFinishedDeliveriesPaginationAPI(page, token);
 
-  Future<FinishedDeliveriesResponseModel> _fetchFinishedDeliveriesPagination(
+  Future<List> _fetchFinishedDeliveriesPaginationAPI(
       int page, String token) async {
     final stringBuffer = StringBuffer();
     final completer = Completer<String>();
-
+    List data = [];
     String stringToDecode = "";
     final client = HttpClient();
     final request = await client.postUrl(Uri.parse(
@@ -36,7 +36,12 @@ class FinishedDeliveriesAPIService
     stringToDecode = await completer.future;
 
     if (response.statusCode == 200) {
-      return finishedDeliveriesResponseModelFromJson(stringToDecode);
+      final result = finishedDeliveriesResponseModelFromJson(stringToDecode);
+      int len = result.data.length;
+      for (int i = 0; i < len; i++) {
+        data.add(result.data[i].toJson());
+      }
+      return data;
     } else {
       throw Exception('Unable to fetch Data from rest api');
     }

@@ -1,5 +1,6 @@
 import 'package:autism_project/core/helper/sign_out.dart';
 import 'package:autism_project/data/models/login_and_profile_response_model.dart';
+import 'package:autism_project/presentation/providers/login_and_profile_provider.dart';
 import 'package:autism_project/presentation/ui/update_profile_page.dart';
 import 'package:autism_project/presentation/widgets/appbar_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Provider.of<ProfileAPIService>(context, listen: false)
-            .fetchProfileData(),
+        future: context.read<LoginAndProfileProvider>().getProfileProvider(),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
           return snapshot.hasData

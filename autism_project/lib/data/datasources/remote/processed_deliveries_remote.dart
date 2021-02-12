@@ -7,38 +7,38 @@ import 'package:autism_project/data/models/processed_delivery_details_response_m
 import 'package:autism_project/data/models/processed_delivery_list_response_model.dart';
 
 abstract class ProcessDeliveriesRemoteDataSource {
-  Future<ProcessedDeliveriesResponseModel> fetchProcessedDeliveriesPagination(
+  Future<List> fetchProcessedDeliveriesPaginationRemote(
       int page, String token);
 
-  Future<ProcessedDeliveriesListResponseModel> fetchProcessedDeliveriesList(
+  Future<List> fetchProcessedDeliveriesListRemote(
       String token, int orderId);
 
   Future<ProcessedDeliveriesDetailsResponseModel>
-      fetchProcessedDeliveriesDetails(String token, int orderId);
+      fetchProcessedDeliveriesDetailsRemote(String token, int orderId);
 }
 
 class ProcessedDeliveriesAPIService
     implements ProcessDeliveriesRemoteDataSource {
   @override
-  Future<ProcessedDeliveriesResponseModel> fetchProcessedDeliveriesPagination(
+  Future<List> fetchProcessedDeliveriesPaginationRemote(
           int page, String token) =>
-      _fetchProcessedDeliveriesPagination(page, token);
+      _fetchProcessedDeliveriesPaginationAPI(page, token);
 
   @override
-  Future<ProcessedDeliveriesListResponseModel> fetchProcessedDeliveriesList(
+  Future<List> fetchProcessedDeliveriesListRemote(
           String token, int orderId) =>
-      _fetchProcessedDeliveriesList(token, orderId);
+      _fetchProcessedDeliveriesListAPI(token, orderId);
 
   @override
   Future<ProcessedDeliveriesDetailsResponseModel>
-      fetchProcessedDeliveriesDetails(String token, int orderId) =>
-          _fetchProcessedDeliveriesDetails(token, orderId);
+      fetchProcessedDeliveriesDetailsRemote(String token, int orderId) =>
+          _fetchProcessedDeliveriesDetailsAPI(token, orderId);
 
-  Future<ProcessedDeliveriesResponseModel> _fetchProcessedDeliveriesPagination(
+  Future<List> _fetchProcessedDeliveriesPaginationAPI(
       int page, String token) async {
     final stringBuffer = StringBuffer();
     final completer = Completer<String>();
-
+    List data = [];
     String stringToDecode = "";
     final client = HttpClient();
     final request = await client.postUrl(Uri.parse(
@@ -55,17 +55,22 @@ class ProcessedDeliveriesAPIService
     stringToDecode = await completer.future;
 
     if (response.statusCode == 200) {
-      return processedDeliveriesResponseModelFromJson(stringToDecode);
+      final result = processedDeliveriesResponseModelFromJson(stringToDecode);
+      int len = result.data.length;
+      for (int i = 0; i < len; i++) {
+        data.add(result.data[i].toJson());
+      }
+      return data;
     } else {
       throw Exception('Unable to fetch Data from rest api');
     }
   }
 
-  Future<ProcessedDeliveriesListResponseModel> _fetchProcessedDeliveriesList(
+  Future<List> _fetchProcessedDeliveriesListAPI(
       String token, int orderId) async {
     final stringBuffer = StringBuffer();
     final completer = Completer<String>();
-
+    List data = [];
     String stringToDecode = "";
     final client = HttpClient();
     final request = await client.postUrl(Uri.parse(
@@ -81,14 +86,19 @@ class ProcessedDeliveriesAPIService
     stringToDecode = await completer.future;
 
     if (response.statusCode == 200) {
-      return processedDeliveriesListResponseModelFromJson(stringToDecode);
+      final result = processedDeliveriesListResponseModelFromJson(stringToDecode);
+      int len = result.data.length;
+      for (int i = 0; i < len; i++) {
+        data.add(result.data[i].toJson());
+      }
+      return data;
     } else {
       throw Exception('Unable to fetch Data from rest api');
     }
   }
 
   Future<ProcessedDeliveriesDetailsResponseModel>
-      _fetchProcessedDeliveriesDetails(String token, int orderId) async {
+      _fetchProcessedDeliveriesDetailsAPI(String token, int orderId) async {
     final stringBuffer = StringBuffer();
     final completer = Completer<String>();
 
@@ -104,7 +114,6 @@ class ProcessedDeliveriesAPIService
       stringBuffer.write(contents);
     }, onDone: () => completer.complete(stringBuffer.toString()));
     stringToDecode = await completer.future;
-    print(stringToDecode);
 
     if (response.statusCode == 200) {
       return processedDeliveriesDetailsResponseModelFromJson(stringToDecode);

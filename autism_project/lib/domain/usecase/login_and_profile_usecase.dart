@@ -9,10 +9,10 @@ class LoginAndProfileUseCase {
 
   LoginAndProfileUseCase(this.loginAndProfileRepository);
 
-  Future<Either<Failure, LoginAndProfileResponseEntity>> callLogin(LoginRequestModel requestModel) async {
-    return await loginAndProfileRepository.getLoginResponse(requestModel);
+  Future<Either<Failure, LoginAndProfileResponseEntity>> callLoginResponseUseCase(LoginRequestModel requestModel) async {
+    return await loginAndProfileRepository.getLoginResponseRepository(requestModel);
   }
-  Future<Either<Failure, LoginAndProfileResponseEntity>> callProfile() async {
-    return await loginAndProfileRepository.getProfileResponse();
+  Future<Either<Failure, LoginAndProfileResponseEntity>> callProfileResponseUseCase() async {
+    return await loginAndProfileRepository.getProfileResponseRepository();
   }
 }

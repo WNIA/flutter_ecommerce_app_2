@@ -1,5 +1,5 @@
 import 'package:autism_project/core/helper/constants.dart';
-import 'package:autism_project/data/datasources/pending_order_remote.dart';
+import 'package:autism_project/presentation/providers/pending_order_provider.dart';
 import 'package:autism_project/presentation/ui/pending_order_details_and_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -46,8 +46,8 @@ class _PendingOrderPaginationState
           !_controller.position.outOfRange) {
         print("end scroll.............page.....${widget.currentPage}");
         List temp =
-            await Provider.of<PendingOrderAPIService>(context, listen: false)
-                .fetchPendingOrderPagination(
+            await context.read<PendingOrderProvider>()
+                .getPendingOrderProvider(
                     widget.currentPage + 1, Constants.myToken);
         // print("....... ${widget.currentPage}");
         widget.data.addAll(temp);
