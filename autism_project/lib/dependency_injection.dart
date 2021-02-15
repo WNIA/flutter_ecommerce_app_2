@@ -1,83 +1,49 @@
 import 'dart:io';
 
-import 'package:autism_project/core/helper/shared_preference.dart';
-import 'package:autism_project/core/network/network_info.dart';
-import 'package:autism_project/presentation/providers/login_and_profile_provider.dart';
-import 'package:autism_project/presentation/providers/pending_order_provider.dart';
+import 'package:autism_project/core/data/shared_prefs.dart';
+import 'package:autism_project/features/finished_delivery/data/datasource/remote/finished_delivery_remote.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'data/datasources/remote/finished_deliveries_remote.dart';
-import 'data/datasources/remote/processed_deliveries_remote.dart';
-import 'package:autism_project/data/datasources/remote/login_and_profile_remote.dart';
-import 'package:autism_project/data/datasources/remote/pending_order_remote.dart';
-import 'package:autism_project/domain/repository/finished_deliveries_repository.dart';
-import 'package:autism_project/domain/repository/login_and_profile_repository.dart';
-import 'package:autism_project/domain/repository/pending_order_repository.dart';
-import 'package:autism_project/domain/repository/processed_deliveries_repository.dart';
-import 'package:autism_project/domain/usecase/finished_deliveries_usecase.dart';
-import 'package:autism_project/domain/usecase/login_and_profile_usecase.dart';
-import 'package:autism_project/domain/usecase/pending_order_usecase.dart';
-import 'package:autism_project/domain/usecase/processed_deliveries_usecase.dart';
-import 'package:autism_project/presentation/providers/finished_deliveries_provider.dart';
-import 'package:autism_project/presentation/providers/processed_deliveries_provider.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'core/network/network_info.dart';
+import 'features/finished_delivery/data/datasource/local/finished_delivery_local.dart';
+import 'features/finished_delivery/domain/repository/finished_delivey_repository.dart';
+import 'features/finished_delivery/domain/usecase/finished_delivery_usecase.dart';
+import 'features/finished_delivery/presentation/provider/finished_delivery_provider.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  WidgetsFlutterBinding.ensureInitialized();
   //Providers
-  sl.registerFactory(() => FinishedDeliveriesProvider(finishedDeliveriesUseCase: sl()));
-  sl.registerFactory(() => ProcessedDeliveriesProvider(processedDeliveriesUseCase: sl()));
-  sl.registerFactory(() => PendingOrderProvider(pendingOrderUseCase: sl()));
-  sl.registerFactory(() => LoginAndProfileProvider(loginAndProfileUseCase: sl()));
+  sl.registerFactory(
+      () => FinishedDeliveryProvider(finishedDeliveryUseCase: sl()));
 
   //UseCases
-  sl.registerLazySingleton(() => FinishedDeliveriesUseCase(sl()));
-  sl.registerLazySingleton(() => ProcessedDeliveriesUseCase(sl()));
-  sl.registerLazySingleton(() => PendingOrderUseCase(sl()));
-  sl.registerLazySingleton(() => LoginAndProfileUseCase(sl()));
+  sl.registerLazySingleton(
+      () => FinishedDeliveryPaginationUseCase(finishedDeliveryRepository: sl()));
 
   //Repository
-  sl.registerLazySingleton<FinishedDeliveriesRepository>(
-      () => FinishedDeliveriesRepositoryImpl(
-            remoteDataSource: sl(),
-            networkInfo: sl(),
-          ));
-  sl.registerLazySingleton<ProcessedDeliveriesRepository>(
-      () => ProcessedDeliveriesRepositoryImpl(
-            networkInfo: sl(),
-            processDeliveriesRemoteDataSource: sl(),
-          ));
-  sl.registerLazySingleton<PendingOrderRepository>(
-      () => PendingOrderRepositoryImpl(
-            networkInfo: sl(),
-            pendingOrderRemoteDataSource: sl(),
-          ));
-  sl.registerLazySingleton<LoginAndProfileRepository>(
-      () => LoginAndProfileRepositoryImpl(
-            networkInfo: sl(),
-            loginAndProfileRemoteDataSource: sl(),
-          ));
+  sl.registerLazySingleton<FinishedDeliveryRepository>(() =>
+      FinishedDeliveryRepositoryImpl(
+          networkInfo: sl(), finishedDeliveryRemote: sl(), finishedDeliveryLocal: sl()));
 
   //Data Sources
-  sl.registerLazySingleton<FinishedDeliveriesRemoteDataSource>(
-      () => FinishedDeliveriesAPIService());
-  sl.registerLazySingleton<ProcessDeliveriesRemoteDataSource>(
-      () => ProcessedDeliveriesAPIService());
-  sl.registerLazySingleton<PendingOrderRemoteDataSource>(
-      () => PendingOrderAPIService());
-  sl.registerLazySingleton<LoginAndProfileRemoteDataSource>(
-      () => LoginAndProfileAPIService());
+  sl.registerLazySingleton<FinishedDeliveryRemote>(
+      () => FinishedDeliveryRemoteImpl(client: sl()));
+  sl.registerLazySingleton<FinishedDeliveryLocal>(
+          () => FinishedDeliveryLocalImpl());
 
   //Core
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
-  sl.registerLazySingleton(() => SharedPrefs());
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(connectionChecker: sl()));
+  sl.registerLazySingleton<LocalDataSource>(
+      () => SharedPrefs(sharedPreferences: sl()));
 
   //External
   final sharedPref = await SharedPreferences.getInstance();
   sl.registerFactory(() => sharedPref);
-  sl.registerLazySingleton(() => http.Client());
   sl.registerLazySingleton(() => HttpClient());
   sl.registerLazySingleton(() => DataConnectionChecker());
 }
