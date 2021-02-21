@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'core/util/provider_list.dart';
 import 'core/util/route_list.dart';
-import 'features/finished_delivery/presentation/ui/finished_delivery.dart';
+import 'features/finished_delivery/presentation/ui/finished_delivery_page.dart';
 import 'dependency_injection.dart' as di;
 
 Future<void> main() async {
@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
             accentColor: Colors.black,
           ),
           debugShowCheckedModeBanner: false,
-          home: FinishedDelivery(),
+          home: FinishedDeliveryPage(),
           routes: routeList(),
       ),
     );

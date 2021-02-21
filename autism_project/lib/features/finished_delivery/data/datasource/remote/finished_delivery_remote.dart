@@ -34,8 +34,8 @@ class FinishedDeliveryRemoteImpl implements FinishedDeliveryRemote {
       List data = [];
       final fdrm = FinishedDeliveryResponseModel.fromJson(json.decode(decode));
       print(fdrm);
-      for (int i = 0; i < fdrm.data.length; i++) {
-        data.add(fdrm.data[i].toJson());
+      for(int i = 0; i < fdrm.data.length; i++){
+       data.add(fdrm.data[i].toJson());
       }
       return data;
     } else {

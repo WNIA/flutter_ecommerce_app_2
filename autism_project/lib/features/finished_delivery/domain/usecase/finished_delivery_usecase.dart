@@ -9,8 +9,8 @@ class FinishedDeliveryPaginationUseCase {
 
   FinishedDeliveryPaginationUseCase({@required this.finishedDeliveryRepository});
 
-  Future<Either<Failure, List>> call(int page, String token, BuildContext context) async {
-    return finishedDeliveryRepository.callFinishedDeliveryRepository(page, token, context);
+  Future<Either<Failure, List>> call(int page, String token) async {
+    return finishedDeliveryRepository.callFinishedDeliveryRepository(page, token);
   }
 
 }

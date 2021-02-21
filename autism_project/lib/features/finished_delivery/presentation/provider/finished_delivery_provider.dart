@@ -2,7 +2,7 @@ import 'package:autism_project/features/finished_delivery/domain/usecase/finishe
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class FinishedDeliveryProvider with ChangeNotifier {
+class FinishedDeliveryProvider extends ChangeNotifier {
   final FinishedDeliveryPaginationUseCase _finishedDeliveryUseCase;
 
   FinishedDeliveryProvider(
@@ -14,11 +14,11 @@ class FinishedDeliveryProvider with ChangeNotifier {
   String error;
 
   Future<void> loadFinishedDeliveryPaginationData(
-      int page, String token, BuildContext context) async {
+      int page, String token) async {
     isLoading = true;
     // notifyListeners();
 
-    final result = await _finishedDeliveryUseCase(page, token, context);
+    final result = await _finishedDeliveryUseCase(page, token);
 
     result.fold(
       (l) {
