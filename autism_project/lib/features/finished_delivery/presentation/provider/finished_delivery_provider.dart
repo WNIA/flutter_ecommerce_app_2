@@ -13,12 +13,14 @@ class FinishedDeliveryProvider extends ChangeNotifier {
   List deliveryData;
   String error;
 
+  int _page = 1;
+
   Future<void> loadFinishedDeliveryPaginationData(
-      int page, String token) async {
+      String token) async {
     isLoading = true;
     // notifyListeners();
 
-    final result = await _finishedDeliveryUseCase(page, token);
+    final result = await _finishedDeliveryUseCase(_page, token);
 
     result.fold(
       (l) {
@@ -30,6 +32,7 @@ class FinishedDeliveryProvider extends ChangeNotifier {
         isLoading = false;
       },
     );
+    _page++;
     notifyListeners();
   }
 }

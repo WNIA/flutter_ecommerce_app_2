@@ -14,6 +14,7 @@ class FinishedDeliveryRemoteImpl implements FinishedDeliveryRemote {
   final HttpClient client;
 
   FinishedDeliveryRemoteImpl({@required this.client});
+  List allData = List();
   @override
   Future<List> callFinishedDeliveryRemote(int page, String token) async {
     final sBuffer = StringBuffer();
@@ -29,15 +30,16 @@ class FinishedDeliveryRemoteImpl implements FinishedDeliveryRemote {
       sBuffer.write(event);
     }, onDone: () => completer.complete(sBuffer.toString()));
     String decode = await completer.future;
-
+    List data = [];
     if (response.statusCode == 200) {
-      List data = [];
+
       final fdrm = FinishedDeliveryResponseModel.fromJson(json.decode(decode));
       print(fdrm);
       for(int i = 0; i < fdrm.data.length; i++){
        data.add(fdrm.data[i].toJson());
       }
-      return data;
+      allData.addAll(data);
+      return allData;
     } else {
       throw ServerException();
     }

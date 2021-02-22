@@ -20,6 +20,7 @@ Future<void> init() async {
   //Providers
   sl.registerFactory(
       () => FinishedDeliveryProvider(finishedDeliveryUseCase: sl()));
+  //Bloc
 
   //UseCases
   sl.registerLazySingleton(
