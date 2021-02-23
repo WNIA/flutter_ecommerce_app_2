@@ -1,7 +1,7 @@
 import 'package:autism_project/features/finished_delivery/data/model/finished_delivery_response_model.dart';
 import 'package:equatable/equatable.dart';
 
-class FinishedDeliveryEntity extends Equatable{
+class FinishedDeliveryEntity extends Equatable {
   FinishedDeliveryEntity({
     this.status,
     this.success,
@@ -13,7 +13,6 @@ class FinishedDeliveryEntity extends Equatable{
   final bool success;
   final List<FinishedDeliveryPaginationData> data;
   final String message;
-
 
   @override
   // TODO: implement props

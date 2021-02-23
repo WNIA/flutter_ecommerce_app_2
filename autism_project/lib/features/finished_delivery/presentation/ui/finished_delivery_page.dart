@@ -33,6 +33,7 @@ class _FinishedDeliveryPageState extends State<FinishedDeliveryPage> {
       setState(() {});
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,17 +45,16 @@ class _FinishedDeliveryPageState extends State<FinishedDeliveryPage> {
   }
 
   Widget _send() {
-    final isLoading = context.select((FinishedDeliveryProvider n) => n.isLoading);
+    final isLoading =
+        context.select((FinishedDeliveryProvider n) => n.isLoading);
     final list = context.select((FinishedDeliveryProvider n) => n.deliveryData);
-    if(list == null && !isLoading) {
+    if (list == null && !isLoading) {
       context
           .read<FinishedDeliveryProvider>()
           .loadFinishedDeliveryPaginationData(Constant.token);
-    }
-    else if(list != null) {
+    } else if (list != null) {
       return finishedDeliveryPagination(list);
-    }
-    else{
+    } else {
       return Center(child: CircularProgressIndicator());
     }
   }

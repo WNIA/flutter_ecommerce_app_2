@@ -10,8 +10,10 @@ abstract class FinishedDeliveryLocal {
 class FinishedDeliveryLocalImpl implements FinishedDeliveryLocal {
   @override
   Future<List> fetchLocalJson(BuildContext context) async {
-    String j = await DefaultAssetBundle.of(context).loadString("assets/json/finished_delivery.json");
-    final responseModel = FinishedDeliveryResponseModel.fromJson(json.decode(j));
+    String j = await DefaultAssetBundle.of(context)
+        .loadString("assets/json/finished_delivery.json");
+    final responseModel =
+        FinishedDeliveryResponseModel.fromJson(json.decode(j));
     List data = [];
     int length = responseModel.data.length;
 

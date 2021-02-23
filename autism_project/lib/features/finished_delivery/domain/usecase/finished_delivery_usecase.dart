@@ -7,10 +7,11 @@ import 'package:flutter/material.dart';
 class FinishedDeliveryPaginationUseCase {
   final FinishedDeliveryRepository finishedDeliveryRepository;
 
-  FinishedDeliveryPaginationUseCase({@required this.finishedDeliveryRepository});
+  FinishedDeliveryPaginationUseCase(
+      {@required this.finishedDeliveryRepository});
 
   Future<Either<Failure, List>> call(int page, String token) async {
-    return finishedDeliveryRepository.callFinishedDeliveryRepository(page, token);
+    return finishedDeliveryRepository.callFinishedDeliveryRepository(
+        page, token);
   }
-
 }

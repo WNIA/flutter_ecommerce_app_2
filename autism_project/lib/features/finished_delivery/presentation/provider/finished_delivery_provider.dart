@@ -15,10 +15,9 @@ class FinishedDeliveryProvider extends ChangeNotifier {
 
   int _page = 1;
 
-  Future<void> loadFinishedDeliveryPaginationData(
-      String token) async {
+  Future<void> loadFinishedDeliveryPaginationData(String token) async {
     isLoading = true;
-    // notifyListeners();
+    notifyListeners();
 
     final result = await _finishedDeliveryUseCase(_page, token);
 

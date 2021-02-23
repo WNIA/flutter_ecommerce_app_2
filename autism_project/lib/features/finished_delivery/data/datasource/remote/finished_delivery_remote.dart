@@ -6,15 +6,17 @@ import 'package:autism_project/core/error/exception.dart';
 import 'package:autism_project/features/finished_delivery/data/model/finished_delivery_response_model.dart';
 import 'package:flutter/foundation.dart';
 
-abstract class FinishedDeliveryRemote {
+abstract class FinishedDeliveryRemoteDataSource {
   Future<List> callFinishedDeliveryRemote(int page, String token);
 }
 
-class FinishedDeliveryRemoteImpl implements FinishedDeliveryRemote {
+class FinishedDeliveryRemoteImpl implements FinishedDeliveryRemoteDataSource {
   final HttpClient client;
 
   FinishedDeliveryRemoteImpl({@required this.client});
+
   List allData = List();
+
   @override
   Future<List> callFinishedDeliveryRemote(int page, String token) async {
     final sBuffer = StringBuffer();
@@ -32,11 +34,10 @@ class FinishedDeliveryRemoteImpl implements FinishedDeliveryRemote {
     String decode = await completer.future;
     List data = [];
     if (response.statusCode == 200) {
-
       final fdrm = FinishedDeliveryResponseModel.fromJson(json.decode(decode));
       print(fdrm);
-      for(int i = 0; i < fdrm.data.length; i++){
-       data.add(fdrm.data[i].toJson());
+      for (int i = 0; i < fdrm.data.length; i++) {
+        data.add(fdrm.data[i].toJson());
       }
       allData.addAll(data);
       return allData;

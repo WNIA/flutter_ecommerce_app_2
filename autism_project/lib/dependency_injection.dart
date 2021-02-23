@@ -2,6 +2,10 @@ import 'dart:io';
 
 import 'package:autism_project/core/data/shared_prefs.dart';
 import 'package:autism_project/features/finished_delivery/data/datasource/remote/finished_delivery_remote.dart';
+import 'package:autism_project/features/login/data/datasource/remote/login_remote.dart';
+import 'package:autism_project/features/login/domain/repository/login_repository.dart';
+import 'package:autism_project/features/login/domain/usecase/login_usecase.dart';
+import 'package:autism_project/features/login/presentation/provider/login_provider.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
@@ -20,25 +24,37 @@ Future<void> init() async {
   //Providers
   sl.registerFactory(
       () => FinishedDeliveryProvider(finishedDeliveryUseCase: sl()));
-  //Bloc
+
+  sl.registerFactory(() => LoginProvider(loginUseCase: sl()));
 
   //UseCases
-  sl.registerLazySingleton(
-      () => FinishedDeliveryPaginationUseCase(finishedDeliveryRepository: sl()));
+  sl.registerLazySingleton(() =>
+      FinishedDeliveryPaginationUseCase(finishedDeliveryRepository: sl()));
+
+  sl.registerLazySingleton(() => LoginUseCase(loginRepository: sl()));
 
   //Repository
   sl.registerLazySingleton<FinishedDeliveryRepository>(() =>
       FinishedDeliveryRepositoryImpl(
-          networkInfo: sl(), finishedDeliveryRemote: sl(), finishedDeliveryLocal: sl()));
+          networkInfo: sl(),
+          finishedDeliveryRemote: sl(),
+          finishedDeliveryLocal: sl(),
+          localDataSource: sl()));
+
+  sl.registerLazySingleton<LoginRepository>(() => LoginRepositoryImpl(
+      networkInfo: sl(), loginRemoteDataSource: sl(), localDataSource: sl()));
 
   //Data Sources
-  sl.registerLazySingleton<FinishedDeliveryRemote>(
+  sl.registerLazySingleton<FinishedDeliveryRemoteDataSource>(
       () => FinishedDeliveryRemoteImpl(client: sl()));
   sl.registerLazySingleton<FinishedDeliveryLocal>(
-          () => FinishedDeliveryLocalImpl());
+      () => FinishedDeliveryLocalImpl());
+
+  sl.registerLazySingleton<LoginRemoteDataSource>(() => LoginRemoteImpl());
 
   //Core
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(connectionChecker: sl()));
+  sl.registerLazySingleton<NetworkInfo>(
+      () => NetworkInfoImpl(connectionChecker: sl()));
   sl.registerLazySingleton<LocalDataSource>(
       () => SharedPrefs(sharedPreferences: sl()));
 

@@ -1,17 +1,12 @@
-import 'dart:convert';
+import 'package:autism_project/features/login/domain/entity/login_request_entity.dart';
 
-// LoginRequestModel loginRequestFromJson(String str) => LoginRequestModel.fromJson(json.decode(str));
-//
-// String loginRequestToJson(LoginRequestModel data) => json.encode(data.toJson());
 
-class LoginRequestModel {
+class LoginRequestModel extends LoginRequestEntity {
   LoginRequestModel({
-    this.email,
-    this.password,
-  });
+    String email,
+    String password,
+  }) : super(email: email, password: password);
 
-  String email;
-  String password;
 
   factory LoginRequestModel.fromJson(Map<String, dynamic> json) => LoginRequestModel(
     email: json["Email"],
