@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:autism_project/core/data/shared_prefs.dart';
+import 'package:autism_project/core/shared_prefs/data/shared_prefs.dart';
 import 'package:autism_project/features/finished_delivery/data/datasource/remote/finished_delivery_remote.dart';
 import 'package:autism_project/features/login/data/datasource/remote/login_remote.dart';
 import 'package:autism_project/features/login/domain/repository/login_repository.dart';
@@ -38,8 +38,7 @@ Future<void> init() async {
       FinishedDeliveryRepositoryImpl(
           networkInfo: sl(),
           finishedDeliveryRemote: sl(),
-          finishedDeliveryLocal: sl(),
-          localDataSource: sl()));
+          ));
 
   sl.registerLazySingleton<LoginRepository>(() => LoginRepositoryImpl(
       networkInfo: sl(), loginRemoteDataSource: sl(), localDataSource: sl()));

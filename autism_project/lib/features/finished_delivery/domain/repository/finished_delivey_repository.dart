@@ -1,8 +1,6 @@
-import 'package:autism_project/core/data/shared_prefs.dart';
 import 'package:autism_project/core/error/exception.dart';
 import 'package:autism_project/core/error/failure.dart';
 import 'package:autism_project/core/network/network_info.dart';
-import 'package:autism_project/features/finished_delivery/data/datasource/local/finished_delivery_local.dart';
 import 'package:autism_project/features/finished_delivery/data/datasource/remote/finished_delivery_remote.dart';
 import 'package:dartz/dartz.dart';
 
@@ -14,15 +12,12 @@ abstract class FinishedDeliveryRepository {
 class FinishedDeliveryRepositoryImpl implements FinishedDeliveryRepository {
   final NetworkInfo networkInfo;
   final FinishedDeliveryRemoteDataSource finishedDeliveryRemote;
-  final FinishedDeliveryLocal finishedDeliveryLocal;
-  final LocalDataSource localDataSource;
 
 
   FinishedDeliveryRepositoryImpl(
       {this.networkInfo,
       this.finishedDeliveryRemote,
-      this.finishedDeliveryLocal,
-      this.localDataSource});
+      });
 
 
   @override

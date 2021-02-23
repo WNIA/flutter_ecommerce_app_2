@@ -1,4 +1,5 @@
-import 'package:autism_project/core/data/shared_prefs.dart';
+import 'package:autism_project/core/helper/constant.dart';
+import 'package:autism_project/core/shared_prefs/data/shared_prefs.dart';
 import 'package:autism_project/core/error/exception.dart';
 import 'package:autism_project/core/error/failure.dart';
 import 'package:autism_project/core/network/network_info.dart';
@@ -32,6 +33,7 @@ class LoginRepositoryImpl extends LoginRepository {
       final data = await loginRemoteDataSource.callLoginRemote(requestEntity);
       localDataSource.saveUserLoggedInSharedPref(data.success);
       localDataSource.saveUserJWTSharedPref(data.jwt);
+      Constant.token = await localDataSource.getUserJWTSharedPref();
       return Right(data);
     } on ServerException {
       return Left(ServerFailure());

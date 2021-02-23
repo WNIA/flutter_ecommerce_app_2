@@ -3,12 +3,12 @@ import 'package:autism_project/features/finished_delivery/presentation/provider/
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class FinishedDeliveryPage extends StatefulWidget {
+class FinishedDeliveryScreen extends StatefulWidget {
   @override
-  _FinishedDeliveryPageState createState() => _FinishedDeliveryPageState();
+  _FinishedDeliveryScreenState createState() => _FinishedDeliveryScreenState();
 }
 
-class _FinishedDeliveryPageState extends State<FinishedDeliveryPage> {
+class _FinishedDeliveryScreenState extends State<FinishedDeliveryScreen> {
   ScrollController _controller;
 
   @override
