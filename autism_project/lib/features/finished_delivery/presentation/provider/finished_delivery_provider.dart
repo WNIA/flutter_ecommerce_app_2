@@ -17,7 +17,7 @@ class FinishedDeliveryProvider extends ChangeNotifier {
 
   Future<void> loadFinishedDeliveryPaginationData(String token) async {
     isLoading = true;
-    notifyListeners();
+    // notifyListeners();
 
     final result = await _finishedDeliveryUseCase(_page, token);
 
@@ -32,6 +32,7 @@ class FinishedDeliveryProvider extends ChangeNotifier {
       },
     );
     _page++;
+    print(deliveryData.length);
     notifyListeners();
   }
 }

@@ -35,7 +35,7 @@ class FinishedDeliveryRemoteImpl implements FinishedDeliveryRemoteDataSource {
     List data = [];
     if (response.statusCode == 200) {
       final fdrm = FinishedDeliveryResponseModel.fromJson(json.decode(decode));
-      print(fdrm);
+      print(fdrm.message);
       for (int i = 0; i < fdrm.data.length; i++) {
         data.add(fdrm.data[i].toJson());
       }

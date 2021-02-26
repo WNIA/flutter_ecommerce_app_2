@@ -1,4 +1,3 @@
-import 'package:autism_project/features/login/domain/entity/login_request_entity.dart';
 import 'package:autism_project/features/login/domain/entity/login_response_entity.dart';
 import 'package:autism_project/features/login/domain/usecase/login_usecase.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +12,10 @@ class LoginProvider extends ChangeNotifier {
   String error;
   bool isLogin = false;
 
-  Future<void> loadLoginData(LoginRequestEntity requestEntity) async {
+  Future<bool> loadLoginData(String email, String pass) async {
     isLoading = true;
     notifyListeners();
-    final result = await _loginUseCase.callLoginUseCase(requestEntity);
+    final result = await _loginUseCase.callLoginUseCase(email, pass);
     result.fold(
       (l) {
         error = "fail";
@@ -29,6 +28,8 @@ class LoginProvider extends ChangeNotifier {
         isLogin = true;
       },
     );
+    print("error: $error, isLoading: $isLoading, isLogin: $isLogin");
     notifyListeners();
+    return isLogin;
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:autism_project/core/shared_prefs/data/shared_prefs.dart';
+import 'core/helper/shared_prefs.dart';
 import 'package:autism_project/features/finished_delivery/data/datasource/remote/finished_delivery_remote.dart';
 import 'package:autism_project/features/login/data/datasource/remote/login_remote.dart';
 import 'package:autism_project/features/login/domain/repository/login_repository.dart';
@@ -41,7 +41,7 @@ Future<void> init() async {
           ));
 
   sl.registerLazySingleton<LoginRepository>(() => LoginRepositoryImpl(
-      networkInfo: sl(), loginRemoteDataSource: sl(), localDataSource: sl()));
+      networkInfo: sl(), loginRemoteDataSource: sl(), sharedPrefs: sl()));
 
   //Data Sources
   sl.registerLazySingleton<FinishedDeliveryRemoteDataSource>(
@@ -54,8 +54,8 @@ Future<void> init() async {
   //Core
   sl.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(connectionChecker: sl()));
-  sl.registerLazySingleton<LocalDataSource>(
-      () => SharedPrefs(sharedPreferences: sl()));
+  sl.registerLazySingleton(
+      () => SharedPrefs());
 
   //External
   final sharedPref = await SharedPreferences.getInstance();
