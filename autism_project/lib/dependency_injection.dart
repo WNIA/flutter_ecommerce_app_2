@@ -1,7 +1,11 @@
 import 'dart:io';
 
 import 'package:autism_project/features/finished_delivery/data/datasource/remote/finished_delivery_remote.dart';
-import 'package:autism_project/features/login/domain/usecase/login_usecase.dart';
+import 'package:autism_project/features/pending_order/data/datasource/local/pending_order_local.dart';
+import 'package:autism_project/features/pending_order/data/datasource/remote/pending_order_remote.dart';
+import 'package:autism_project/features/pending_order/domain/repository/pending_order_repository.dart';
+import 'package:autism_project/features/pending_order/domain/usecase/pending_order_usecase.dart';
+import 'package:autism_project/features/pending_order/presentation/provider/pending_order_provider.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
@@ -22,27 +26,39 @@ Future<void> init() async {
   sl.registerFactory(
       () => FinishedDeliveryProvider(finishedDeliveryUseCase: sl()));
 
-
+  sl.registerFactory(
+      () => PendingOrderProvider(pendingOrderPaginationUseCase: sl()));
 
   //UseCases
   sl.registerLazySingleton(() =>
       FinishedDeliveryPaginationUseCase(finishedDeliveryRepository: sl()));
 
-  sl.registerLazySingleton(() => LoginUseCase(loginRepository: sl()));
+  sl.registerLazySingleton(
+      () => PendingOrderPaginationUseCase(pendingOrderRepository: sl()));
 
   //Repository
-  sl.registerLazySingleton<FinishedDeliveryRepository>(() =>
-      FinishedDeliveryRepositoryImpl(
-          networkInfo: sl(),
-          finishedDeliveryRemote: sl(),
-        finishedDeliveryLocal: sl(),
+  sl.registerLazySingleton<FinishedDeliveryRepository>(
+      () => FinishedDeliveryRepositoryImpl(
+            networkInfo: sl(),
+            finishedDeliveryRemote: sl(),
+            finishedDeliveryLocal: sl(),
           ));
+
+  sl.registerLazySingleton<PendingOrderRepository>(() =>
+      PendingOrderRepositoryImpl(
+          networkInfo: sl(),
+          pendingOrderLocal: sl(),
+          pendingOrderRemote: sl()));
 
   //Data Sources
   sl.registerLazySingleton<FinishedDeliveryRemoteDataSource>(
       () => FinishedDeliveryRemoteImpl(client: sl()));
   sl.registerLazySingleton<FinishedDeliveryLocal>(
       () => FinishedDeliveryLocalImpl());
+
+  sl.registerLazySingleton<PendingOrderRemoteDataSource>(
+      () => PendingOrderRemoteImpl(client: sl()));
+  sl.registerLazySingleton<PendingOrderLocal>(() => PendingOrderLocalImpl());
 
   //Core
   sl.registerLazySingleton<NetworkInfo>(

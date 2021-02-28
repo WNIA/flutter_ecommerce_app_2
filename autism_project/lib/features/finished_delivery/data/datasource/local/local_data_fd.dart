@@ -1,4 +1,4 @@
-Map localData = {
+final localDataFD = {
   "status": 200,
   "success": true,
   "data": [
@@ -6,8 +6,6 @@ Map localData = {
       "Name": "Evan Ahmed",
       "Email": "evankhan1000@gmail.com",
       "MobileNumber": "01816880099",
-      "Picture":
-          "http://199.192.28.11/stationary/v1/./user_img/2018-06-16-10-46-55-592.jpg",
       "OrderLatitude": 23.77246607,
       "OrderLongitude": 90.43005134,
       "OrderId": 210,

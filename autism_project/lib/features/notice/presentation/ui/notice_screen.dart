@@ -2,20 +2,23 @@ import 'package:autism_project/core/widgets/box_deco.dart';
 import 'package:flutter/material.dart';
 
 
-class ProcessedDeliveryScreen extends StatefulWidget {
+class NoticeScreen extends StatefulWidget {
   @override
-  _ProcessedDeliveryScreenState createState() => _ProcessedDeliveryScreenState();
+  _NoticeScreenState createState() => _NoticeScreenState();
 }
 
-class _ProcessedDeliveryScreenState extends State<ProcessedDeliveryScreen> {
+class _NoticeScreenState extends State<NoticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: processedDeliveryListItem(context),
+      appBar: AppBar(
+        title: Text("Notice Screen"),
+      ),
+      body: noticeListItem(context),
     );
   }
 
-  Padding processedDeliveryListItem(BuildContext context) {
+  Padding noticeListItem(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Container(
@@ -32,7 +35,7 @@ class _ProcessedDeliveryScreenState extends State<ProcessedDeliveryScreen> {
                   children: [
                     CircleAvatar(
                       radius: 27,
-                      // backgroundImage: AssetImage('assets/images/placeholder_image.png'),
+                      backgroundImage: AssetImage('assets/images/placeholder_image.png'),
                     ),
                     SizedBox(width: 8),
                     Column(

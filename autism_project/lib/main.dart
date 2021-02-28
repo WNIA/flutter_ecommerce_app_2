@@ -1,4 +1,4 @@
-import 'package:autism_project/features/finished_delivery/presentation/ui/finished_delivery_screen.dart';
+import 'package:autism_project/features/home/presentation/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
           accentColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        home: FinishedDeliveryScreen(),
+        home: HomeScreen(),
         routes: routeList(),
       ),
     );
