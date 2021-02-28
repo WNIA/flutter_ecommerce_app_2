@@ -1,22 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class LocalDataSource {
+abstract class SharedPrefs {
   Future<bool> saveUserLoggedInSharedPref(bool isUserLoggedIn);
-
   Future<bool> saveUserJWTSharedPref(String userJWT);
-
   Future<bool> getUserLoggedInSharedPref();
-
   Future<String> getUserJWTSharedPref();
 }
 
-class SharedPrefs implements LocalDataSource {
-  final SharedPreferences sharedPreferences;
-
-  SharedPrefs({this.sharedPreferences});
+class SharedPrefsImpl  implements SharedPrefs{
+  final SharedPrefsImpl sharedPrefs;
+  SharedPrefsImpl({@required this.sharedPrefs});
 
   String sharedPrefUserLoggedInKey = "ISLOGGEDIN";
   String sharedPrefUserJWTKey = "USERJWTKEY";
+
+
 
   //TODO: catch all data from login api - @WNIA
 
@@ -28,7 +27,6 @@ class SharedPrefs implements LocalDataSource {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.setBool(sharedPrefUserLoggedInKey, isUserLoggedIn);
   }
-
   @override
   Future<bool> saveUserJWTSharedPref(String userJWT) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -43,7 +41,6 @@ class SharedPrefs implements LocalDataSource {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool(sharedPrefUserLoggedInKey);
   }
-
   @override
   Future<String> getUserJWTSharedPref() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
