@@ -9,30 +9,7 @@ class FinishedDeliveryProvider extends ChangeNotifier {
       {@required FinishedDeliveryPaginationUseCase finishedDeliveryUseCase})
       : _finishedDeliveryUseCase = finishedDeliveryUseCase;
 
-  bool isLoading = false;
-  List deliveryData;
-  String error;
-
-  int _page = 1;
-
-  Future<void> loadFinishedDeliveryPaginationData(String token) async {
-    isLoading = true;
-    // notifyListeners();
-
-    final result = await _finishedDeliveryUseCase(_page, token);
-
-    result.fold(
-      (l) {
-        error = "fail";
-        isLoading = false;
-      },
-      (r) {
-        deliveryData = r;
-        isLoading = false;
-      },
-    );
-    _page++;
-    print(deliveryData.length);
-    notifyListeners();
+  Future<List> callFinishedDeliveryAPI(int page, String token) {
+    return _finishedDeliveryUseCase.call(page, token);
   }
 }

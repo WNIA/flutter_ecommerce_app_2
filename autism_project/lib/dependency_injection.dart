@@ -1,16 +1,13 @@
 import 'dart:io';
 
-import 'core/helper/shared_prefs.dart';
 import 'package:autism_project/features/finished_delivery/data/datasource/remote/finished_delivery_remote.dart';
-import 'package:autism_project/features/login/data/datasource/remote/login_remote.dart';
-import 'package:autism_project/features/login/domain/repository/login_repository.dart';
 import 'package:autism_project/features/login/domain/usecase/login_usecase.dart';
-import 'package:autism_project/features/login/presentation/provider/login_provider.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/helper/shared_prefs.dart';
 import 'core/network/network_info.dart';
 import 'features/finished_delivery/data/datasource/local/finished_delivery_local.dart';
 import 'features/finished_delivery/domain/repository/finished_delivey_repository.dart';
@@ -25,7 +22,7 @@ Future<void> init() async {
   sl.registerFactory(
       () => FinishedDeliveryProvider(finishedDeliveryUseCase: sl()));
 
-  sl.registerFactory(() => LoginProvider(loginUseCase: sl()));
+
 
   //UseCases
   sl.registerLazySingleton(() =>
@@ -38,10 +35,8 @@ Future<void> init() async {
       FinishedDeliveryRepositoryImpl(
           networkInfo: sl(),
           finishedDeliveryRemote: sl(),
+        finishedDeliveryLocal: sl(),
           ));
-
-  sl.registerLazySingleton<LoginRepository>(() => LoginRepositoryImpl(
-      networkInfo: sl(), loginRemoteDataSource: sl(), sharedPrefs: sl()));
 
   //Data Sources
   sl.registerLazySingleton<FinishedDeliveryRemoteDataSource>(
@@ -49,13 +44,11 @@ Future<void> init() async {
   sl.registerLazySingleton<FinishedDeliveryLocal>(
       () => FinishedDeliveryLocalImpl());
 
-  sl.registerLazySingleton<LoginRemoteDataSource>(() => LoginRemoteImpl());
-
   //Core
   sl.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(connectionChecker: sl()));
-  sl.registerLazySingleton(
-      () => SharedPrefs());
+  sl.registerLazySingleton<SharedPrefs>(
+      () => SharedPrefsImpl(sharedPrefs: sl()));
 
   //External
   final sharedPref = await SharedPreferences.getInstance();

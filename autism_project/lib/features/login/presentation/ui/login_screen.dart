@@ -1,8 +1,5 @@
 import 'package:autism_project/core/helper/validators.dart';
-import 'package:autism_project/features/finished_delivery/presentation/ui/finished_delivery_screen.dart';
-import 'package:autism_project/features/login/presentation/provider/login_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,10 +18,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   bool _obscurePassword = true;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<LoginProvider>(context, listen: false);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -76,26 +73,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   RaisedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState.validate()) {
-                        email = emailControl.text;
-                        pass = passwordControl.text;
-                        if (await provider.loadLoginData(email, pass)) {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => FinishedDeliveryScreen(),),);
-                        } else {
-                          _scaffoldKey.currentState.showSnackBar(SnackBar(
-                              content: Text('Please try again :D'),
-                              duration: Duration(seconds: 10)));
-                        }
-                      }
-                    },
+                    onPressed: () async {},
                   ),
                 ],
               ),
             ),
           ),
-          provider.isLoading ? overlayProgressbar() : Container(),
+          isLoading ? overlayProgressbar() : Container(),
         ],
       ),
     );
