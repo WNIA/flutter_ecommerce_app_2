@@ -1,9 +1,9 @@
-import 'package:autism_project/features/home/presentation/ui/home_screen.dart';
+import 'package:autism_project/presentation/ui/home_screen.dart';
+import 'package:autism_project/util/provider_list.dart';
+import 'package:autism_project/util/route_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'core/util/provider_list.dart';
-import 'core/util/route_list.dart';
 import 'dependency_injection.dart' as di;
 
 Future<void> main() async {
