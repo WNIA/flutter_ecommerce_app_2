@@ -12,7 +12,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/helper/shared_prefs.dart';
-import 'core/network/network_info.dart';
+import 'core/services/network_info.dart';
 import 'features/finished_delivery/data/datasource/local/finished_delivery_local.dart';
 import 'features/finished_delivery/domain/repository/finished_delivey_repository.dart';
 import 'features/finished_delivery/domain/usecase/finished_delivery_usecase.dart';

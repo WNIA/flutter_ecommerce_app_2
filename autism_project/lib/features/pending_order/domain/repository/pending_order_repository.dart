@@ -1,4 +1,4 @@
-import 'package:autism_project/core/network/network_info.dart';
+import 'package:autism_project/core/services/network_info.dart';
 import 'package:autism_project/features/pending_order/data/datasource/local/pending_order_local.dart';
 import 'package:autism_project/features/pending_order/data/datasource/remote/pending_order_remote.dart';
 

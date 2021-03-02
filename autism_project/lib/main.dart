@@ -1,10 +1,10 @@
-import 'package:autism_project/features/home/presentation/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'core/util/provider_list.dart';
 import 'core/util/route_list.dart';
 import 'dependency_injection.dart' as di;
+import 'features/home/presentation/ui/home_screen.dart';
 
 Future<void> main() async {
   await di.init();
