@@ -1,12 +1,3 @@
-
-
-
-// PendingOrderResponseModel pendingOrderResponseFromJson(String str) =>
-//     PendingOrderResponseModel.fromJson(json.decode(str));
-//
-// String pendingOrderResponseToJson(PendingOrderResponseModel data) =>
-//     json.encode(data.toJson());
-
 import 'package:autism_project/domain/entity/pending_order_entity.dart';
 
 class PendingOrderResponseModel extends PendingOrderEntity{

@@ -28,7 +28,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
   Future<LoginResponseEntity> _getRemote(String email, String pass) async {
     final data = await loginRemoteDataSource.callLoginRemote(email, pass);
-    sharedPrefs.saveUserJWTSharedPref(data.jwt);
+    sharedPrefs.saveUserJWTSharedPref(data.jwt );
     sharedPrefs.saveUserLoggedInSharedPref(data.success);
     return data;
   }
