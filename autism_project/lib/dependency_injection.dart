@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:autism_project/data/source/remote/login_remote.dart';
 import 'package:autism_project/domain/repository/login_repository.dart';
 import 'package:autism_project/domain/usecase/login_usecase.dart';
 import 'package:autism_project/presentation/provider/login_provider.dart';
@@ -46,7 +47,9 @@ Future<void> init() async {
       () => PendingOrderPaginationUseCase(pendingOrderRepository: sl()));
 
   //Repository
-  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(networkInfo: sl(), sharedPrefs: sl(), loginRemoteDataSource: sl()));
+  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
+      networkInfo: sl(), sharedPrefs: sl(), loginRemoteDataSource: sl()));
+
   sl.registerLazySingleton<FinishedDeliveryRepository>(
       () => FinishedDeliveryRepositoryImpl(
             networkInfo: sl(),
@@ -61,6 +64,8 @@ Future<void> init() async {
           pendingOrderRemote: sl()));
 
   //Data Sources
+  sl.registerLazySingleton<LoginRemoteDataSource>(() => LoginRemoteImpl());
+
   sl.registerLazySingleton<FinishedDeliveryRemoteDataSource>(
       () => FinishedDeliveryRemoteImpl(client: sl()));
   sl.registerLazySingleton<FinishedDeliveryLocal>(
@@ -76,7 +81,8 @@ Future<void> init() async {
   sl.registerLazySingleton<SharedPrefs>(
       () => SharedPrefsImpl(sharedPrefs: sl()));
 
-  sl.registerLazySingleton<PushNotification>(() => PushNotificationImpl(firebaseMessaging: sl()));
+  sl.registerLazySingleton<PushNotification>(
+      () => PushNotificationImpl(firebaseMessaging: sl()));
 
   //External
   final sharedPref = await SharedPreferences.getInstance();

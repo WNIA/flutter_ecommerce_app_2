@@ -1,5 +1,3 @@
-
-
 import 'package:autism_project/domain/entity/login_response_entity.dart';
 
 class LoginResponseModel extends LoginResponseEntity {
@@ -9,12 +7,7 @@ class LoginResponseModel extends LoginResponseEntity {
     String jwt,
     LoginResponseData data,
     String message,
-  }) : super(
-            status: status,
-            success: success,
-            jwt: jwt,
-            data: data,
-            message: message);
+  }) : super(status: status, success: success, jwt: jwt, data: data, message: message);
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) =>
       LoginResponseModel(

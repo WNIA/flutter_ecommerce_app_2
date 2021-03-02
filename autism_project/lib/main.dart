@@ -1,4 +1,6 @@
+import 'package:autism_project/presentation/provider/login_provider.dart';
 import 'package:autism_project/presentation/ui/home_screen.dart';
+import 'package:autism_project/presentation/ui/login_screen.dart';
 import 'package:autism_project/util/provider_list.dart';
 import 'package:autism_project/util/route_list.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool isLoggedIn = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserLoggedInState();
+  }
+
+  getUserLoggedInState() {
+    Provider.of<AuthProvider>(context, listen: false)
+        .userLoggedIn()
+        .then((value) => isLoggedIn = value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -30,7 +47,9 @@ class _MyAppState extends State<MyApp> {
           accentColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+        home: isLoggedIn != null
+            ? (isLoggedIn ? HomeScreen() : LoginScreen())
+            : LoginScreen(),
         routes: routeList(),
       ),
     );
