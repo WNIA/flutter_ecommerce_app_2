@@ -21,6 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   getUserToken(){
     Provider.of<LoginProvider>(context, listen: false).userToken().then((value) => Constant.token = value);
+    setState(() {
+
+    });
   }
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,9 @@
+import 'package:autism_project/core/helper/authenticate.dart';
 import 'package:autism_project/features/home/presentation/widget/appbar_widget.dart';
+import 'package:autism_project/features/login/presentation/provider/login_provider.dart';
 import 'package:autism_project/features/profile/presentation/ui/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -71,7 +74,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SizedBox(height: 10),
               GestureDetector(
                 onTap: () {
-
+                  Provider.of<LoginProvider>(context, listen: false).logOut();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Authenticate()));
                 },
                 child: Row(
                   children: [
