@@ -1,6 +1,10 @@
 import 'dart:io';
 
 import 'package:autism_project/features/finished_delivery/data/datasource/remote/finished_delivery_remote.dart';
+import 'package:autism_project/features/login/data/datasource/remote/login_remote.dart';
+import 'package:autism_project/features/login/domain/repository/login_repository.dart';
+import 'package:autism_project/features/login/domain/usecase/login_usecase.dart';
+import 'package:autism_project/features/login/presentation/provider/login_provider.dart';
 import 'package:autism_project/features/pending_order/data/datasource/local/pending_order_local.dart';
 import 'package:autism_project/features/pending_order/data/datasource/remote/pending_order_remote.dart';
 import 'package:autism_project/features/pending_order/domain/repository/pending_order_repository.dart';
@@ -12,7 +16,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/helper/shared_prefs.dart';
-import 'core/network/network_info.dart';
+import 'core/services/network_info.dart';
 import 'features/finished_delivery/data/datasource/local/finished_delivery_local.dart';
 import 'features/finished_delivery/domain/repository/finished_delivey_repository.dart';
 import 'features/finished_delivery/domain/usecase/finished_delivery_usecase.dart';
@@ -23,6 +27,8 @@ final sl = GetIt.instance;
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
   //Providers
+  sl.registerFactory(() => LoginProvider(loginUseCase: sl()));
+
   sl.registerFactory(
       () => FinishedDeliveryProvider(finishedDeliveryUseCase: sl()));
 
@@ -30,6 +36,8 @@ Future<void> init() async {
       () => PendingOrderProvider(pendingOrderPaginationUseCase: sl()));
 
   //UseCases
+  sl.registerLazySingleton(() => LoginUseCase(loginRepository: sl()));
+
   sl.registerLazySingleton(() =>
       FinishedDeliveryPaginationUseCase(finishedDeliveryRepository: sl()));
 
@@ -37,6 +45,9 @@ Future<void> init() async {
       () => PendingOrderPaginationUseCase(pendingOrderRepository: sl()));
 
   //Repository
+  sl.registerLazySingleton<LoginRepository>(() => LoginRepositoryImpl(
+      loginRemoteDataSource: sl(), sharedPrefs: sl(), networkInfo: sl()));
+
   sl.registerLazySingleton<FinishedDeliveryRepository>(
       () => FinishedDeliveryRepositoryImpl(
             networkInfo: sl(),
@@ -51,6 +62,7 @@ Future<void> init() async {
           pendingOrderRemote: sl()));
 
   //Data Sources
+  sl.registerLazySingleton<LoginRemoteDataSource>(() => LoginRemoteImpl());
   sl.registerLazySingleton<FinishedDeliveryRemoteDataSource>(
       () => FinishedDeliveryRemoteImpl(client: sl()));
   sl.registerLazySingleton<FinishedDeliveryLocal>(

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:autism_project/core/error/exception.dart';
 import 'package:autism_project/features/login/data/model/login_response_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,7 +20,7 @@ class LoginRemoteImpl extends LoginRemoteDataSource {
       print(lrm.message);
       return lrm;
     } else {
-      throw ServerException();
+      return null;
     }
   }
 }
