@@ -1,7 +1,10 @@
+import 'package:autism_project/core/helper/constant.dart';
 import 'package:autism_project/features/home/presentation/widget/home_screen_items.dart';
+import 'package:autism_project/features/login/presentation/provider/login_provider.dart';
 import 'package:autism_project/features/order/presentation/ui/order_display_screen.dart';
 import 'package:autism_project/features/settings/presentation/ui/settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,6 +13,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserToken();
+  }
+  getUserToken(){
+    Provider.of<LoginProvider>(context, listen: false).userToken().then((value) => Constant.token = value);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

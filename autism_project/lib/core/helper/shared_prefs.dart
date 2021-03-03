@@ -9,7 +9,7 @@ abstract class SharedPrefs {
 }
 
 class SharedPrefsImpl  implements SharedPrefs{
-  final SharedPrefsImpl sharedPrefs;
+  final SharedPreferences sharedPrefs;
   SharedPrefsImpl({@required this.sharedPrefs});
 
   String sharedPrefUserLoggedInKey = "ISLOGGEDIN";

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'core/helper/authenticate.dart';
 import 'core/util/provider_list.dart';
 import 'core/util/route_list.dart';
 import 'dependency_injection.dart' as di;
-import 'features/home/presentation/ui/home_screen.dart';
 
 Future<void> main() async {
   await di.init();
@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
           accentColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+        home: Authenticate(),
         routes: routeList(),
       ),
     );
