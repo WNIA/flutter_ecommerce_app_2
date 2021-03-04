@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'core/helper/authenticate.dart';
+import 'core/services/push_notification.dart';
 import 'core/util/provider_list.dart';
 import 'core/util/route_list.dart';
 import 'dependency_injection.dart' as di;
@@ -17,6 +18,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final PushNotification pushNotification = di.sl<PushNotification>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    pushNotificationService();
+  }
+
+  pushNotificationService() async {
+    await pushNotification.initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
