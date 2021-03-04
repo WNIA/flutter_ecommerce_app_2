@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:autism_project/core/services/push_notification.dart';
 import 'package:autism_project/features/finished_delivery/data/datasource/remote/finished_delivery_remote.dart';
 import 'package:autism_project/features/login/data/datasource/remote/login_remote.dart';
 import 'package:autism_project/features/login/domain/repository/login_repository.dart';
@@ -11,6 +12,7 @@ import 'package:autism_project/features/pending_order/domain/repository/pending_
 import 'package:autism_project/features/pending_order/domain/usecase/pending_order_usecase.dart';
 import 'package:autism_project/features/pending_order/presentation/provider/pending_order_provider.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,10 +79,12 @@ Future<void> init() async {
       () => NetworkInfoImpl(connectionChecker: sl()));
   sl.registerLazySingleton<SharedPrefs>(
       () => SharedPrefsImpl(sharedPrefs: sl()));
+  sl.registerLazySingleton(() => PushNotification(fcm: sl()));
 
   //External
   final sharedPref = await SharedPreferences.getInstance();
   sl.registerFactory(() => sharedPref);
   sl.registerLazySingleton(() => HttpClient());
   sl.registerLazySingleton(() => DataConnectionChecker());
+  sl.registerLazySingleton(() => FirebaseMessaging());
 }
